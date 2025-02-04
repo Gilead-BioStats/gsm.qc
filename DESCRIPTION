@@ -15,10 +15,12 @@ BugReports: https://github.com/Gilead-BioStats/gsm.qc/issues
 Depends: 
     R (>= 4.0)
 Imports:
+    dplyr,
     gsm,
     gsm.kri,
     gsm.mapping,
-    gsm.reporting
+    gsm.reporting,
+    purrr
 Suggests:
     clindata,
     testthat
