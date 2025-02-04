@@ -19,8 +19,6 @@ Imports:
     gsm.mapping,
     gsm.kri,
     gsm.reporting
-VignetteBuilder: 
-    knitr
 Remotes:
     gsm=Gilead-BioStats/gsm@gsm-core-test,
     gsm.mapping=Gilead-BioStats/gsm.mapping@dev,
