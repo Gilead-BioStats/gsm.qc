@@ -1,0 +1,17 @@
+url: https://gilead-biostats.github.io/gsm.qc
+
+template:
+  bootstrap: 5
+  bootswatch: yeti
+  includes:
+    in_header: '<link href="pkgdown/extra.css" rel="stylesheet">'
+
+navbar:
+  structure:
+    left: [articles, reference, news]
+    right: [search, github]
+
+articles:
+  - title: Articles
+    contents:
+      - DataAnalysis
