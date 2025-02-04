@@ -8,10 +8,5 @@ template:
 
 navbar:
   structure:
-    left: [articles, reference, news]
+    left: [reference, news]
     right: [search, github]
-
-articles:
-  - title: Articles
-    contents:
-      - DataAnalysis
