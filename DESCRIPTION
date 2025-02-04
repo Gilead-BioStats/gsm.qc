@@ -16,12 +16,14 @@ Depends:
     R (>= 4.0)
 Imports:
     gsm,
-    gsm.mapping,
     gsm.kri,
+    gsm.mapping,
     gsm.reporting
 Suggests:
+    clindata,
     testthat
 Remotes:
+    clindata=Gilead-BioStats/clindata,
     gsm=Gilead-BioStats/gsm@gsm-core-test,
     gsm.mapping=Gilead-BioStats/gsm.mapping@dev,
     gsm.kri=Gilead-BioStats/gsm.kri@dev,

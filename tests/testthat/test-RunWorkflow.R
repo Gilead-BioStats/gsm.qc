@@ -1,8 +1,8 @@
-wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings")
-workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)))
+wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings", strPackage = "gsm.mapping")
+workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)), strPackage = "gsm.kri")
 
 # Don't run things we don't use.
-used_params <- map(workflows, ~ map(.x$steps, "params")) %>%
+used_params <- purrr::map(workflows, ~ purrr::map(.x$steps, "params")) %>%
   unlist() %>%
   unique()
 wf_mapping$steps <- purrr::keep(
@@ -11,7 +11,8 @@ wf_mapping$steps <- purrr::keep(
 )
 # Source Data
 lSource <- list(
-  Source_SUBJ = clindata::rawplus_dm,
+  Source_SUBJ = clindata::rawplus_dm %>%
+    mutate(timeontreatment = as.numeric(timeontreatment)),
   Source_AE = clindata::rawplus_ae,
   Source_PD = clindata::ctms_protdev,
   Source_LB = clindata::rawplus_lb,
@@ -49,11 +50,9 @@ lRaw <- list(
     rename(InvestigatorLastName = pi_last_name) %>%
     rename(City = city) %>%
     rename(State = state) %>%
-    rename(Country = country) %>%
-    rename(Status = site_status),
+    rename(Country = country),
   Raw_STUDY = lSource$Source_STUDY %>%
-    rename(studyid = protocol_number) %>%
-    rename(Status = status)
+    rename(studyid = protocol_number)
 )
 
 # Create Mapped Data
@@ -264,3 +263,4 @@ test_that("RunWorkflow errors out if the data save method does not have expected
     "must include a function named .SaveData."
   )
 })
+
