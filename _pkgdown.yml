@@ -8,5 +8,12 @@ template:
 
 navbar:
   structure:
-    left: [reference, news]
+    left: [articles, reference, news]
     right: [search, github]
+  components:
+    articles:
+      - title: "Quality"
+        navbar: "Quality"
+        contents:
+          - articles/QualificationWorkflow
+          - articles/Qualification
