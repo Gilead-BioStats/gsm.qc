@@ -34,7 +34,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::devtools
+          extra-packages: any::rcmdcheck, any::devtools, any::here, local::.
 
       - name: run qualification tests
         run: source(here::here("tests", "testqualification", "test_qualification.R"))
