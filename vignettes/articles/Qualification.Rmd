@@ -207,7 +207,7 @@ pander::pandoc.p('\\pagebreak')
 
 # Pull Request History
 
-```{r prs}
+```{r prs, eval = FALSE}
 release <- gh("/repos/Gilead-BioStats/gsm.qc/releases", .token = remotes:::github_pat())[[1]]
 release_date <- ifelse(is.null(release$published_at), release$created_at, release$published_at)
 
