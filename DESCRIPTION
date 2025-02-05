@@ -15,8 +15,10 @@ BugReports: https://github.com/Gilead-BioStats/gsm.qc/issues
 Depends: 
     R (>= 4.0)
 Suggests:
+    cli,
     clindata,
     dplyr,
+    glue,
     gsm,
     gsm.kri,
     gsm.mapping,

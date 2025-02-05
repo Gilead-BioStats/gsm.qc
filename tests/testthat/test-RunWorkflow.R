@@ -4,6 +4,8 @@ library(gsm.kri)
 library(gsm.reporting)
 library(dplyr)
 library(purrr)
+library(cli)
+library(glue)
 
 wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings", strPackage = "gsm.mapping")
 workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)), strPackage = "gsm.kri")
