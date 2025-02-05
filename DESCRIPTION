@@ -14,15 +14,14 @@ URL: https://github.com/Gilead-BioStats/gsm.qc, https://gilead-biostats.github.i
 BugReports: https://github.com/Gilead-BioStats/gsm.qc/issues
 Depends: 
     R (>= 4.0)
-Imports:
+Suggests:
+    clindata,
     dplyr,
     gsm,
     gsm.kri,
     gsm.mapping,
     gsm.reporting,
-    purrr
-Suggests:
-    clindata,
+    purrr,
     testthat
 Remotes:
     clindata=Gilead-BioStats/clindata,

@@ -7,9 +7,5 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(gsm)
-library(gsm.mapping)
-library(gsm.kri)
-library(gsm.reporting)
 
 test_check("gsm.qc")
