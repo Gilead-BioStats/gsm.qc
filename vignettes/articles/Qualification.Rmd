@@ -205,32 +205,6 @@ pander::pandoc.p('\\pagebreak')
 
 \newpage
 
-## Package List
-
-The table below utilizes the `riskmetric` package, which quantifies the robustness of an R package. The `pkg_score` column captures the risk involved with using a package. The risk level ranges from 0 (low risk) to 1 (high risk).
-
-<!-- The `downloads` column captures a corrected measure of the volume of downloads by users in the last year. The more times a package has been downloaded, the more extensive the user testing and the greater the chance of identifying and logging a bug. When interpreting `downloads`, the scale goes from 0 to 1. The closer `downloads` is to 1, the better the package score is considered. -->
-
-```{r riskmetric, warning = FALSE}
-import_risk <- strsplit(devtools::as.package(here::here())$imports, ",\n")[[1]] %>%
-  map_chr(~gsub( " .*$", "", .x )) %>%
-  pkg_ref() %>%
-  pkg_assess() %>%
-  pkg_score() %>%
-  select("package", "version", "pkg_score") %>%
-  mutate(pkg_score = sprintf("%.3f", round(pkg_score, 5)))
-
-import_risk %>%
-  gt() %>%
-  tab_options(
-    latex.use_longtable = T,
-    table.font.size = px(9)
-  ) %>%
-  opt_row_striping() 
-```
-
-\newpage
-
 # Pull Request History
 
 ```{r prs}
