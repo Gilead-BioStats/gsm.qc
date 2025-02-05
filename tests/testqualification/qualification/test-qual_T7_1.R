@@ -1,5 +1,5 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(c("kri0003", "kri0004", "cou0003", "cou0004"))
+kri_workflows <- MakeWorkflowList(c("kri0003", "kri0004", "cou0003", "cou0004"), strPackage = "gsm.kri")
 
 outputs <- map(kri_workflows, ~ map_vec(.x$steps, ~ .x$output))
 

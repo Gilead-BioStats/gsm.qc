@@ -1,5 +1,5 @@
 ## Test Setup
-kri_workflows <- flatten(MakeWorkflowList(strNames = "kri0001"))
+kri_workflows <- flatten(MakeWorkflowList(strNames = "kri0001", strPackage = "gsm.kri"))
 mapped_data_missing_values <- get_data(kri_workflows, lData_missing_values)
 
 outputs <- map_vec(kri_workflows$steps, ~ .x$output)

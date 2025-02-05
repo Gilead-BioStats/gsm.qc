@@ -1,5 +1,6 @@
 ## Test Setup
-kri_workflows <- c(MakeWorkflowList(c("kri0001", "cou0001")), MakeWorkflowList("kri0001_custom", yaml_path_custom_metrics))
+kri_workflows <- c(MakeWorkflowList(c("kri0001", "cou0001"), strPackage = "gsm.kri"),
+                   MakeWorkflowList("kri0001_custom", yaml_path_custom_metrics, strPackage = "gsm.qc"))
 
 partial_mapped_workflows <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6))
 

@@ -1,5 +1,5 @@
 ## Test Setup
-ae_workflow <- flatten(MakeWorkflowList("kri0001b_custom", strPath = yaml_path_custom_metrics))
+ae_workflow <- flatten(MakeWorkflowList("kri0001b_custom", strPath = yaml_path_custom_metrics, strPackage = "gsm.qc"))
 
 steps <- seq(1, length(ae_workflow$steps))
 

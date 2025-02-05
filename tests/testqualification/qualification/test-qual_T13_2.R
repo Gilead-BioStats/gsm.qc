@@ -1,6 +1,6 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(c(sprintf("kri%04d", 8:9), sprintf("cou%04d", 8:9)))
-kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 8:9), sprintf("cou%04d_custom", 8:9)), yaml_path_custom_metrics)
+kri_workflows <- MakeWorkflowList(c(sprintf("kri%04d", 8:9), sprintf("cou%04d", 8:9)), strPackage = "gsm.kri")
+kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 8:9), sprintf("cou%04d_custom", 8:9)), yaml_path_custom_metrics, strPackage = "gsm.qc")
 
 ## Test Code
 testthat::test_that("Query Rate Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {

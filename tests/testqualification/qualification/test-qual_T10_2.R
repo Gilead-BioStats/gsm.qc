@@ -1,6 +1,6 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(c("kri0011", "cou0011"))
-kri_custom <- MakeWorkflowList(c("kri0011_custom", "cou0011_custom"), yaml_path_custom_metrics)
+kri_workflows <- MakeWorkflowList(c("kri0011", "cou0011"), strPackage = "gsm.kri")
+kri_custom <- MakeWorkflowList(c("kri0011_custom", "cou0011_custom"), yaml_path_custom_metrics, strPackage = "gsm.qc")
 
 ## Test Code
 testthat::test_that("Data Change Rate Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {

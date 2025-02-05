@@ -1,6 +1,6 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(c("kri0005", "cou0005"))
-kri_custom <- MakeWorkflowList(c("kri0005_custom", "cou0005_custom"), yaml_path_custom_metrics)
+kri_workflows <- MakeWorkflowList(c("kri0005", "cou0005"), strPackage = "gsm.kri")
+kri_custom <- MakeWorkflowList(c("kri0005_custom", "cou0005_custom"), yaml_path_custom_metrics, strPackage = "gsm.qc")
 
 ## Test Code
 testthat::test_that("Labs Assessments can be done correctly using a grouping variable, such as Site or Country for KRIs, and Study for QTLs, when applicable.", {

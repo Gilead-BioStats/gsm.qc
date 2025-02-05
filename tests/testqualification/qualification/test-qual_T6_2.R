@@ -1,6 +1,6 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(c(sprintf("kri%04d", 1:2), sprintf("cou%04d", 1:2)))
-kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 1:2), sprintf("cou%04d_custom", 1:2)), yaml_path_custom_metrics)
+kri_workflows <- MakeWorkflowList(c(sprintf("kri%04d", 1:2), sprintf("cou%04d", 1:2)), strPackage = "gsm.kri")
+kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 1:2), sprintf("cou%04d_custom", 1:2)), yaml_path_custom_metrics, strPackage = "gsm.qc")
 
 outputs <- map(kri_workflows, ~ map_vec(.x$steps, ~ .x$output))
 

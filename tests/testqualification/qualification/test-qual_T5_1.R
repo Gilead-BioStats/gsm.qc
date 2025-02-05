@@ -1,6 +1,6 @@
 # Test Setup -------------------------------------------------------
-ae_workflow_custom <- flatten(MakeWorkflowList("kri0001_custom", yaml_path_custom_metrics))
-ae_workflow_default <- flatten(MakeWorkflowList("kri0001"))
+ae_workflow_custom <- flatten(MakeWorkflowList("kri0001_custom", yaml_path_custom_metrics, strPackage = "gsm.qc"))
+ae_workflow_default <- flatten(MakeWorkflowList("kri0001", strPackage = "gsm.kri"))
 
 # define Data ------------------------------------------------------
 test_custom <- robust_runworkflow(ae_workflow_custom, mapped_data)

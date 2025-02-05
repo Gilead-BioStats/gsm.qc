@@ -1,6 +1,6 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(c("kri0003", "kri0004", "cou0003", "cou0004"))
-kri_custom <- MakeWorkflowList(c("kri0003_custom", "kri0004_custom", "cou0003_custom", "cou0004_custom"), yaml_path_custom_metrics)
+kri_workflows <- MakeWorkflowList(c("kri0003", "kri0004", "cou0003", "cou0004"), strPackage = "gsm.kri")
+kri_custom <- MakeWorkflowList(c("kri0003_custom", "kri0004_custom", "cou0003_custom", "cou0004_custom"), yaml_path_custom_metrics, strPackage = "gsm.qc")
 
 ## Test Code
 testthat::test_that("Protocol Deviation Assessments can be done correctly using a grouping variable, such as Site or Country for KRIs, and Study for QTLs, when applicable.", {

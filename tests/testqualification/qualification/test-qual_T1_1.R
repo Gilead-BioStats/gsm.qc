@@ -1,11 +1,11 @@
-source(system.file("tests", "testqualification", "qualification", "qual_data.R", package = "gsm"))
+source(system.file("tests", "testqualification", "qualification", "qual_data.R", package = "gsm.qc"))
 
 # Priority 1 mappings
 test_that("mappings now done by individual domain, test that inputs and outputs of priority 1 mappings are completed as expected", {
   priority1 <- c("AE.yaml", "ENROLL.yaml", "LB.yaml", "PD.yaml", "SDRGCOMP.yaml", "STUDCOMP.yaml", "SUBJ.yaml")
 
   mapped_p1_yaml <- map(priority1, ~ read_yaml(
-    system.file("tests", "testqualification", "qualification", "qual_workflows", "1_mappings", .x, package = "gsm")
+    system.file("tests", "testqualification", "qualification", "qual_workflows", "1_mappings", .x, package = "gsm.qc")
   ))
 
   # Requried raw data is in data source
@@ -26,7 +26,7 @@ test_that("mappings now done by individual domain, test that inputs and outputs 
   priority2 <- c("DATACHG.yaml", "DATAENT.yaml", "QUERY.yaml")
 
   mapped_p2_yaml <- map(priority2, ~ read_yaml(
-    system.file("tests", "testqualification", "qualification", "qual_workflows", "1_mappings", .x, package = "gsm")
+    system.file("tests", "testqualification", "qualification", "qual_workflows", "1_mappings", .x, package = "gsm.qc")
   ))
 
   iwalk(mapped_p2_yaml, ~ expect_true(all(names(.x$spec) %in% c(names(lData), "Mapped_SUBJ"))))
@@ -42,7 +42,7 @@ test_that("mappings now done by individual domain, test that inputs and outputs 
   priority3 <- c("COUNTRY.yaml", "SITE.yaml", "STUDY.yaml")
 
   mapped_p3_yaml <- map(priority3, ~ read_yaml(
-    system.file("tests", "testqualification", "qualification", "qual_workflows", "1_mappings", .x, package = "gsm")
+    system.file("tests", "testqualification", "qualification", "qual_workflows", "1_mappings", .x, package = "gsm.qc")
   ))
 
   iwalk(mapped_p3_yaml, ~ expect_true(all(names(.x$spec) %in% c(names(lData), "Mapped_SUBJ"))))
@@ -57,3 +57,4 @@ test_that("mappings now done by individual domain, test that inputs and outputs 
 
   iwalk(mapped_p3_yaml, ~ expect_true(all(names(flatten(.x$spec)) %in% c(names(lData[names(.x$spec)][[1]]), names(lData["Raw_SUBJ"][[1]])))))
 })
+

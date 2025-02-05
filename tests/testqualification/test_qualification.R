@@ -11,7 +11,7 @@ writeLines(modified_description, here::here("DESCRIPTION"))
 
 # reload package with modified DESCRIPTION file
 devtools::load_all()
-test_dir(here::here("tests", "testqualification", "qualification"), package = "gsm")
+test_dir(here::here("tests", "testqualification", "qualification"), package = "gsm.qc")
 
 # save the original DESCRIPTION file
 writeLines(d, here::here("DESCRIPTION"))

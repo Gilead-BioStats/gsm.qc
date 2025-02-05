@@ -24,7 +24,9 @@ Suggests:
     gsm.mapping,
     gsm.reporting,
     purrr,
-    testthat
+    stringr,
+    testthat, 
+    yaml
 Remotes:
     clindata=Gilead-BioStats/clindata,
     gsm=Gilead-BioStats/gsm@gsm-core-test,
@@ -32,7 +34,7 @@ Remotes:
     gsm.kri=Gilead-BioStats/gsm.kri@dev,
     gsm.reporting=Gilead-BioStats/gsm.reporting@dev
 Config/testthat/edition: 3
-Config/testthat/parallel: true
+Config/testthat/parallel: false
 Encoding: UTF-8
 Language: en-US
 LazyData: true
