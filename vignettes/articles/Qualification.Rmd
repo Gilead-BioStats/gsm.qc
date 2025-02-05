@@ -90,7 +90,7 @@ Test cases for `{gsm}` are written using the standard `testthat` workflow. A sin
 spec_list <- list.files(here::here('tests', 'testqualification', 'qualification'), pattern = "test-qual_", full.names = TRUE)
 
 scrape <- map_df(spec_list, function(x) {
-    testResultsRaw <- testthat::test_file(x, reporter = testthat::ListReporter, package = "gsm") %>% 
+    testResultsRaw <- testthat::test_file(x, reporter = testthat::ListReporter, package = "gsm.qc") %>% 
       as_tibble()
     
     return(testResultsRaw)
@@ -188,45 +188,6 @@ Results %>%
     `Function` ~ px(120), 
     `Spec ID` ~ px(90),
     `Test Description` ~ px(180)
-  ) %>%
-  opt_row_striping() 
-```
-
-\newpage
-
-# Unit Tests
-
-## Unit Testing Overview
-
-Unit testing was performed in addition to qualification testing to help ensure that individual pieces of code within the R package function correctly and produce the expected results. By testing individual units of code in isolation, developers can identify and fix issues early in the development process before more significant and scaled problems arise.
-
-## Unit Test Coverage
-
-The table below summarizes unit test coverage of each `{gsm}` function. This metric quantifies the extent of unit testing. The closer this measure is to 100%, the more unit testing that function has.
-
-```{r covr}
-pkg_cov <- covr::coverage_to_list(covr::package_coverage(here::here()))
-
-pkg_cov_df <- as.data.frame(pkg_cov)
-pkg_cov_df <- tibble::rownames_to_column(pkg_cov_df, "Function")
-
-add1 <- pkg_cov_df[1,]
-add1$Function <- "Total Coverage"
-add1$filecoverage <- add1$totalcoverage
-add1$totalcoverage <- NULL
-
-pkg_coverage <- pkg_cov_df %>%
-  select(-totalcoverage) %>%
-  rbind(add1) %>%
-  mutate(filecoverage = sprintf("%.2f", round(filecoverage, 5)),
-         filecoverage = paste(filecoverage, "%")) %>%
-  rename(`File Coverage` = filecoverage)
-
-pkg_coverage %>%
-  gt() %>%
-  tab_options(
-    latex.use_longtable = T,
-    table.font.size = px(9)
   ) %>%
   opt_row_striping() 
 ```
