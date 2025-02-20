@@ -34,7 +34,7 @@ build_traceability_matrix <- function(df){
 #' @export
 import_specs <- function() {
 
-  output <- read.csv(system.file("qualification", "qualification_specs.csv", package = "gsm")) %>%
+  output <- read.csv(system.file("qualification", "qualification_specs.csv", package = "gsm.qc")) %>%
     dplyr::mutate(
       ID = paste0("S", Spec, "_", Test.ID),
       Test.Status = tolower(Test.Status)

@@ -41,7 +41,7 @@ qualification_map <- function(
   })
 
   ### Read in specs spreadsheet
-  spec <- read.csv(system.file("qualification", "qualification_specs.csv", package = "gsm"))
+  spec <- read.csv(system.file("qualification", "qualification_specs.csv", package = "gsm.qc"))
 
   ### Convert each test ID into own row
   spec <- spec %>%

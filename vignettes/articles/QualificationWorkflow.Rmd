@@ -72,7 +72,7 @@ For example, the first specification from `qualification_specs.csv` is written a
 
 
 ```{r}
-qual_specs_orig <- read.csv(system.file("qualification", "qualification_specs.csv", package = "gsm"))
+qual_specs_orig <- read.csv(system.file("qualification", "qualification_specs.csv", package = "gsm.qc"))
 qual_specs <- qual_specs_orig %>%
   mutate(SpecID = paste0("S", Spec, "_", Test.ID)) %>%
   select(Specs = SpecID, Tests, N.Tests)
