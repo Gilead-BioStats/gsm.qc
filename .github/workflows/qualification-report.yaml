@@ -3,6 +3,8 @@ on:
     types: [published]
   pull_request:
     branches: main
+  repository-dispatch:
+     types: [qualification]
   workflow_dispatch:
 
 name: qualification-report
