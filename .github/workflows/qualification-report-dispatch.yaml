@@ -1,9 +1,6 @@
 on:
-  release:
-    types: [published]
-  pull_request:
-    branches: main
-  workflow_dispatch:
+  repository_dispatch:
+    types: [qualification]
 
 name: qualification-report
 
