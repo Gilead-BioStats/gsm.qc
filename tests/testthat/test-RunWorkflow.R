@@ -7,7 +7,9 @@ library(purrr)
 library(cli)
 library(glue)
 
-wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings", strPackage = "gsm.mapping")
+wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings",
+                               strNames = c("AE", "SUBJ", "PD", "LB", "STUDCOMP", "SDRGCOMP", "DATACHG", "DATAENT", "QUERY", "COUNTRY", "SITE", "STUDY", "ENROLL"),
+                               strPackage = "gsm.mapping")
 workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)), strPackage = "gsm.kri")
 
 # Don't run things we don't use.
