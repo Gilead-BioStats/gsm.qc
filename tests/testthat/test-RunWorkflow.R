@@ -2,68 +2,63 @@ library(gsm)
 library(gsm.mapping)
 library(gsm.kri)
 library(gsm.reporting)
+library(gsm.datasim)
 library(dplyr)
 library(purrr)
 library(cli)
 library(glue)
 
+core_mappings <- c("AE", "COUNTRY", "DATACHG", "DATAENT", "ENROLL", "LB",
+                   "PD", "QUERY", "STUDY", "STUDCOMP", "SDRGCOMP", "SITE", "SUBJ")
+
 wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings",
-                               strNames = c("AE", "SUBJ", "PD", "LB", "STUDCOMP", "SDRGCOMP", "DATACHG", "DATAENT", "QUERY", "COUNTRY", "SITE", "STUDY", "ENROLL"),
+                               strNames = core_mappings,
                                strPackage = "gsm.mapping")
 workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)), strPackage = "gsm.kri")
 
-# Don't run things we don't use.
-used_params <- purrr::map(workflows, ~ purrr::map(.x$steps, "params")) %>%
-  unlist() %>%
-  unique()
-wf_mapping$steps <- purrr::keep(
-  wf_mapping$steps,
-  ~ .x$output %in% used_params
-)
-# Source Data
-lSource <- list(
-  Source_SUBJ = clindata::rawplus_dm %>%
-    mutate(timeontreatment = as.numeric(timeontreatment)),
-  Source_AE = clindata::rawplus_ae,
-  Source_PD = clindata::ctms_protdev,
-  Source_LB = clindata::rawplus_lb,
-  Source_STUDCOMP = clindata::rawplus_studcomp,
-  Source_SDRGCOMP = clindata::rawplus_sdrgcomp %>% dplyr::filter(.data$phase == "Blinded Study Drug Completion"),
-  Source_DATACHG = clindata::edc_data_points,
-  Source_DATAENT = clindata::edc_data_pages,
-  Source_QUERY = clindata::edc_queries,
-  Source_ENROLL = clindata::rawplus_enroll,
-  Source_SITE = clindata::ctms_site,
-  Source_STUDY = clindata::ctms_study
+
+basic_sim <- gsm.datasim::generate_rawdata_for_single_study(
+  SnapshotCount = 1,
+  SnapshotWidth = "months",
+  ParticipantCount = 30,
+  SiteCount = 5,
+  StudyID = "ABC",
+  workflow_path = "workflow/1_mappings",
+  mappings = core_mappings,
+  package = "gsm.mapping",
+  desired_specs = NULL
 )
 
-# Step 0 - Data Ingestion - standardize tables/columns names
+lSource <- basic_sim[[1]]
+
 lRaw <- list(
-  Raw_SUBJ = lSource$Source_SUBJ,
-  Raw_AE = lSource$Source_AE,
-  Raw_PD = lSource$Source_PD %>%
+  Raw_SUBJ = lSource$Raw_SUBJ,
+  Raw_AE = lSource$Raw_AE,
+  Raw_PD = lSource$Raw_PD %>%
     rename(subjid = subjectenrollmentnumber),
-  Raw_LB = lSource$Source_LB,
-  Raw_STUDCOMP = lSource$Source_STUDCOMP %>%
+  Raw_LB = lSource$Raw_LB,
+  Raw_STUDCOMP = lSource$Raw_STUDCOMP %>%
     select(subjid, compyn),
-  Raw_SDRGCOMP = lSource$Source_SDRGCOMP,
-  Raw_DATACHG = lSource$Source_DATACHG %>%
+  Raw_SDRGCOMP = lSource$Raw_SDRGCOMP,
+  Raw_DATACHG = lSource$Raw_DATACHG %>%
     rename(subject_nsv = subjectname),
-  Raw_DATAENT = lSource$Source_DATAENT %>%
+  Raw_DATAENT = lSource$Raw_DATAENT %>%
     rename(subject_nsv = subjectname),
-  Raw_QUERY = lSource$Source_QUERY %>%
+  Raw_QUERY = lSource$Raw_QUERY %>%
     rename(subject_nsv = subjectname),
-  Raw_ENROLL = lSource$Source_ENROLL,
-  Raw_SITE = lSource$Source_SITE %>%
+  Raw_ENROLL = lSource$Raw_ENROLL,
+  Raw_SITE = lSource$Raw_SITE %>%
     rename(studyid = protocol) %>%
     rename(invid = pi_number) %>%
     rename(InvestigatorFirstName = pi_first_name) %>%
     rename(InvestigatorLastName = pi_last_name) %>%
     rename(City = city) %>%
     rename(State = state) %>%
-    rename(Country = country),
-  Raw_STUDY = lSource$Source_STUDY %>%
-    rename(studyid = protocol_number)
+    rename(Country = country) %>%
+    rename(Status = site_status),
+  Raw_STUDY = lSource$Raw_STUDY %>%
+    rename(studyid = protocol_number) %>%
+    rename(Status = status)
 )
 
 # Create Mapped Data
