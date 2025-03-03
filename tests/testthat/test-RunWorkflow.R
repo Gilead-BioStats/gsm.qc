@@ -7,7 +7,7 @@ library(dplyr)
 library(purrr)
 library(cli)
 library(glue)
-
+set.seed(123)
 core_mappings <- c("AE", "COUNTRY", "DATACHG", "DATAENT", "ENROLL", "LB",
                    "PD", "QUERY", "STUDY", "STUDCOMP", "SDRGCOMP", "SITE", "SUBJ")
 
