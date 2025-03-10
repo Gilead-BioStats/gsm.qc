@@ -1,6 +1,8 @@
 on:
   pull_request:
     branches: dev
+  repository_dispatch:
+    types: [qualification-test]
   workflow_dispatch:
 
 name: qualification-tests-dev
@@ -35,6 +37,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, any::devtools, any::here, local::.
+          needs: check, qualification
 
       - name: run qualification tests
         run: source(here::here("tests", "testqualification", "test_qualification.R"))
