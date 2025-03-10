@@ -17,7 +17,6 @@ Depends:
     R (>= 4.0)
 Suggests:
     cli,
-    clindata,
     dplyr,
     gh,
     glue,
@@ -25,7 +24,7 @@ Suggests:
     gsm.datasim,
     gsm.kri,
     gsm.mapping,
-    gsm.reporting
+    gsm.reporting,
     gt,
     here,
     knitr,
@@ -36,12 +35,11 @@ Suggests:
     testthat, 
     yaml
 Remotes:
-    clindata=Gilead-BioStats/clindata,
-    gsm=Gilead-BioStats/gsm@gsm-core-test,
+    gsm=Gilead-BioStats/gsm@dev,
     gsm.mapping=Gilead-BioStats/gsm.mapping@dev,
     gsm.kri=Gilead-BioStats/gsm.kri@dev,
     gsm.reporting=Gilead-BioStats/gsm.reporting@dev
-    gsm.datasim=Gilead-BioStats/gsm.datasim@fix-34
+    gsm.datasim=Gilead-BioStats/gsm.datasim@dev
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
