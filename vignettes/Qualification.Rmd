@@ -2,6 +2,7 @@
 title: "Qualification Report for the {gsm} R Package"
 date: "Report Run Date: `r Sys.Date()`"
 subtitle: "`r paste0('{gsm} v', packageVersion('gsm'))`"
+description: "Report generated based on the qualification tests for all gsm packages"
 output: 
   pdf_document:
     toc: true
@@ -52,15 +53,15 @@ spec_df <- import_specs()
 
 Risk-Based Quality Monitoring (RBQM) is a proactive approach to clinical trial monitoring that focuses on identifying and addressing the most critical risks to the integrity of study data and patient safety. This approach aims to ensure that study data are accurate, reliable, and credible while optimizing the use of resources and minimizing the burden on study sites.
 
-The `{gsm}` R package supports RBQM by performing risk assessments primarily focused on detecting differences in quality at the site level. This approach is intended to detect potential issues related to critical data or process(es) across the major risk categories of safety, efficacy, disposition, treatment, and general quality. Each category consists of one or more risk assessment(s). Each risk assessment analyzes the data to flag sites with potential outliers and provides a visualization to help the user understand the issue.
+The `{gsm}` suite of R packages supports RBQM by performing risk assessments primarily focused on detecting differences in quality at the site level. This approach is intended to detect potential issues related to critical data or process(es) across the major risk categories of safety, efficacy, disposition, treatment, and general quality. Each category consists of one or more risk assessment(s). Each risk assessment analyzes the data to flag sites with potential outliers and provides a visualization to help the user understand the issue.
 
 # Scope
 
-Qualification testing ensures that core functions execute as expected on a system-wide scale. Qualification includes executing various functional, performance, and usability testing. Qualification tests are designed to provide developers with a repeatable process that is easy to update and document. This document summarizes the qualification testing performed on `{gsm}` functions essential to the analysis workflow.
+Qualification testing ensures that core functions execute as expected on a system-wide scale. Qualification includes executing various functional, performance, and usability testing. Qualification tests are designed to provide developers with a repeatable process that is easy to update and document. This document summarizes the qualification testing performed on `gsm` functions essential to the analysis workflow.
 
 # Process Overview
 
-Each essential `{gsm}` workflow function is independently qualified using specifications and test cases compiled in this report. Details are provided below.
+Each essential `gsm` workflow function is independently qualified using specifications and test cases compiled in this report. Details are provided below.
 
 ## Specifications
 
@@ -72,9 +73,9 @@ Each specification includes the following components:
 
 -   **Risk Assessment**
 
-    -   **Risk Level:** assigned a value of "Low", "Medium", or "High", corresponding to the risk associated with the specification failing
+-   **Risk Level:** assigned a value of "Low", "Medium", or "High", corresponding to the risk associated with the specification failing
 
-    -   **Risk Impact:** assigned a value of "Low", "Medium", or "High", corresponding to the severity of the impact associated with the specification failing
+-   **Risk Impact:** assigned a value of "Low", "Medium", or "High", corresponding to the severity of the impact associated with the specification failing
 
 -   **Test Cases:** lists measurable test cases associated with the specification
 
@@ -82,7 +83,7 @@ Each specification includes the following components:
 
 Test cases translate specifications into testable scripts to confirm that the package functions meet the established requirements. Test cases represent how a user may utilize the function to help identify code gaps and support testing automation.
 
-Test cases for `{gsm}` are written using the standard `testthat` workflow. A single test script is saved for each test case and is named following the convention `test_qual_{TestID}.R`, where `TestID` is the test case number. Test code within these scripts is written clearly and concisely to facilitate quick execution and interpretability. Note that a single test case may be associated with multiple specifications.
+Test cases for all `gsm` packages are written using the standard `testthat` workflow. A single test script is saved for each test case and is named following the convention `test_qual_{TestID}.R`, where `TestID` is the test case number. Test code within these scripts is written clearly and concisely to facilitate quick execution and interpretability. Note that a single test case may be associated with multiple specifications.
 
 # Test Results: Overview
 
