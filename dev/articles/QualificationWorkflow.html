@@ -12,6 +12,8 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Qualification Workflow">
+<meta name="description" content="Vignette that describes the workflow of the qualification process for gsm packages.">
+<meta property="og:description" content="Vignette that describes the workflow of the qualification process for gsm packages.">
 <meta name="robots" content="noindex">
 <link href="pkgdown/extra.css" rel="stylesheet">
 </head>
@@ -63,9 +65,9 @@
 
       <h1>Qualification Workflow</h1>
             
-            <h4 data-toc-skip class="date">Date: 2025-03-04</h4>
+            <h4 data-toc-skip class="date">Date: 2025-03-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/Gilead-BioStats/gsm.qc/blob/dev/vignettes/articles/QualificationWorkflow.Rmd" class="external-link"><code>vignettes/articles/QualificationWorkflow.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Gilead-BioStats/gsm.qc/blob/dev/vignettes/QualificationWorkflow.Rmd" class="external-link"><code>vignettes/QualificationWorkflow.Rmd</code></a></small>
       <div class="d-none name"><code>QualificationWorkflow.Rmd</code></div>
     </div>
 
@@ -816,24 +818,26 @@ to T21_1 in the specifications:</p>
 </h2>
 <p>The Qualification Report is generated to document and display the
 qualification that the code has been through. The report lives as a
-Qualification vignette in <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> and is rendered during
-other workflows. The Qualification Report is also attached to each
-release and included in the <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> site to display the
-qualification status of <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a>. The sections of the
-Qualification Report are outlined below.</p>
+Qualification vignette in <a href="https://github.com/Gilead-BioStats/gsm.qc" class="external-link">gsm.qc</a> and is rendered during
+workflows in all <code>gsm</code> core packages when they push to
+<code>main</code> or have a release. The Qualification Report is also
+attached to each release and included in the <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> site
+to display the qualification status of each <code>gsm</code> package.
+The sections of the Qualification Report are outlined below.</p>
 <div class="section level4">
 <h4 id="qualification-testing-results">Qualification Testing Results<a class="anchor" aria-label="anchor" href="#qualification-testing-results"></a>
 </h4>
 <p>Using the specifications, test cases, and test code outlined above
 the qualification status of all assessments currently qualified within
-<a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> is rendered, consisting of smaller sections for each
-assessment. These smaller sections will include the procedure that is
-being qualified, which should correspond to the function that is used
-for that procedure. An overview of the specifications is also included
-that has the ID, Description, Risk Level, Risk Impact, and associated
-test cases corresponding to each specification. This information is
-pulled from the Specification Spreadsheet file
-(<code>qualification_specs.csv</code>) outlined above.</p>
+the <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> suite of packages is rendered, consisting of
+smaller sections for each assessment. These smaller sections will
+include the procedure that is being qualified, which should correspond
+to the function that is used for that procedure. An overview of the
+specifications is also included that has the ID, Description, Risk
+Level, Risk Impact, and associated test cases corresponding to each
+specification. This information is pulled from the Specification
+Spreadsheet file (<code>qualification_specs.csv</code>) outlined
+above.</p>
 <div class="section level5">
 <h5 id="test-results-overview">Test Results: Overview<a class="anchor" aria-label="anchor" href="#test-results-overview"></a>
 </h5>

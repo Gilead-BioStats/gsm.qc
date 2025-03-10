@@ -12,6 +12,8 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Qualification Report for the {gsm} R Package">
+<meta name="description" content="Report generated based on the qualification tests for all gsm packages">
+<meta property="og:description" content="Report generated based on the qualification tests for all gsm packages">
 <meta name="robots" content="noindex">
 <link href="pkgdown/extra.css" rel="stylesheet">
 </head>
@@ -62,12 +64,12 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Qualification Report for the {gsm} R Package</h1>
-            <h3 data-toc-skip class="subtitle">{gsm} v2.2.2</h3>
+            <h3 data-toc-skip class="subtitle">{gsm} v2.2.3</h3>
             
             <h4 data-toc-skip class="date">Report Run Date:
-2025-03-04</h4>
+2025-03-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/Gilead-BioStats/gsm.qc/blob/dev/vignettes/articles/Qualification.Rmd" class="external-link"><code>vignettes/articles/Qualification.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Gilead-BioStats/gsm.qc/blob/dev/vignettes/Qualification.Rmd" class="external-link"><code>vignettes/Qualification.Rmd</code></a></small>
       <div class="d-none name"><code>Qualification.Rmd</code></div>
     </div>
 
@@ -83,14 +85,15 @@ most critical risks to the integrity of study data and patient safety.
 This approach aims to ensure that study data are accurate, reliable, and
 credible while optimizing the use of resources and minimizing the burden
 on study sites.</p>
-<p>The <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> R package supports RBQM by performing risk
-assessments primarily focused on detecting differences in quality at the
-site level. This approach is intended to detect potential issues related
-to critical data or process(es) across the major risk categories of
-safety, efficacy, disposition, treatment, and general quality. Each
-category consists of one or more risk assessment(s). Each risk
-assessment analyzes the data to flag sites with potential outliers and
-provides a visualization to help the user understand the issue.</p>
+<p>The <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> suite of R packages supports RBQM by
+performing risk assessments primarily focused on detecting differences
+in quality at the site level. This approach is intended to detect
+potential issues related to critical data or process(es) across the
+major risk categories of safety, efficacy, disposition, treatment, and
+general quality. Each category consists of one or more risk
+assessment(s). Each risk assessment analyzes the data to flag sites with
+potential outliers and provides a visualization to help the user
+understand the issue.</p>
 </div>
 <div class="section level2">
 <h2 id="scope">Scope<a class="anchor" aria-label="anchor" href="#scope"></a>
@@ -100,13 +103,13 @@ on a system-wide scale. Qualification includes executing various
 functional, performance, and usability testing. Qualification tests are
 designed to provide developers with a repeatable process that is easy to
 update and document. This document summarizes the qualification testing
-performed on <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> functions essential to the analysis
+performed on <code>gsm</code> functions essential to the analysis
 workflow.</p>
 </div>
 <div class="section level2">
 <h2 id="process-overview">Process Overview<a class="anchor" aria-label="anchor" href="#process-overview"></a>
 </h2>
-<p>Each essential <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> workflow function is independently
+<p>Each essential <code>gsm</code> workflow function is independently
 qualified using specifications and test cases compiled in this report.
 Details are provided below.</p>
 <div class="section level3">
@@ -121,17 +124,13 @@ cases may exist for a specification.</p>
 <ul>
 <li><p><strong>Description:</strong> outlines the use case for the
 specification</p></li>
-<li>
-<p><strong>Risk Assessment</strong></p>
-<ul>
+<li><p><strong>Risk Assessment</strong></p></li>
 <li><p><strong>Risk Level:</strong> assigned a value of “Low”, “Medium”,
 or “High”, corresponding to the risk associated with the specification
 failing</p></li>
 <li><p><strong>Risk Impact:</strong> assigned a value of “Low”,
 “Medium”, or “High”, corresponding to the severity of the impact
 associated with the specification failing</p></li>
-</ul>
-</li>
 <li><p><strong>Test Cases:</strong> lists measurable test cases
 associated with the specification</p></li>
 </ul>
@@ -143,9 +142,9 @@ associated with the specification</p></li>
 that the package functions meet the established requirements. Test cases
 represent how a user may utilize the function to help identify code gaps
 and support testing automation.</p>
-<p>Test cases for <a href="https://github.com/Gilead-BioStats/gsm" class="external-link">gsm</a> are written using the standard
-<code>testthat</code> workflow. A single test script is saved for each
-test case and is named following the convention
+<p>Test cases for all <code>gsm</code> packages are written using the
+standard <code>testthat</code> workflow. A single test script is saved
+for each test case and is named following the convention
 <code>test_qual_{TestID}.R</code>, where <code>TestID</code> is the test
 case number. Test code within these scripts is written clearly and
 concisely to facilitate quick execution and interpretability. Note that
@@ -2029,12 +2028,12 @@ a single test case may be associated with multiple specifications.</p>
 <em>datasets</em>, <em>methods</em> and <em>base</em></p>
 <p><strong>other attached packages:</strong> <em>yaml(v.2.3.10)</em>,
 <em>glue(v.1.8.0)</em>, <em>cli(v.3.6.4)</em>, <em>gsm.qc(v.0.0.2)</em>,
-<em>testthat(v.3.2.3)</em>, <em>riskmetric(v.0.2.4)</em>,
+<em>testthat(v.3.2.3)</em>, <em>riskmetric(v.0.2.5)</em>,
 <em>stringr(v.1.5.1)</em>, <em>gh(v.1.4.1)</em>,
 <em>pander(v.0.6.6)</em>, <em>purrr(v.1.0.4)</em>,
 <em>dplyr(v.1.1.4)</em>, <em>knitr(v.1.49)</em>, <em>gt(v.0.11.1)</em>,
 <em>gsm.reporting(v.0.0.1)</em>, <em>gsm.kri(v.0.0.1)</em>,
-<em>gsm.mapping(v.0.0.1)</em> and <em>gsm(v.2.2.2)</em></p>
+<em>gsm.mapping(v.0.0.2)</em> and <em>gsm(v.2.2.3)</em></p>
 <p><strong>loaded via a namespace (and not attached):</strong>
 <em>tidyselect(v.1.2.1)</em>, <em>urltools(v.1.7.3)</em>,
 <em>fastmap(v.1.2.0)</em>, <em>lazyeval(v.0.2.2)</em>,
