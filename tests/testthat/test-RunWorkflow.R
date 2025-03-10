@@ -2,7 +2,6 @@ library(gsm)
 library(gsm.mapping)
 library(gsm.kri)
 library(gsm.reporting)
-library(gsm.datasim)
 library(dplyr)
 library(purrr)
 library(cli)
@@ -16,20 +15,7 @@ wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings",
                                strPackage = "gsm.mapping")
 workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)), strPackage = "gsm.kri")
 
-
-basic_sim <- gsm.datasim::generate_rawdata_for_single_study(
-  SnapshotCount = 1,
-  SnapshotWidth = "months",
-  ParticipantCount = 30,
-  SiteCount = 5,
-  StudyID = "ABC",
-  workflow_path = "workflow/1_mappings",
-  mappings = core_mappings,
-  package = "gsm.mapping",
-  desired_specs = NULL
-)
-
-lSource <- basic_sim[[1]]
+lSource <- gsm::lSource
 
 lRaw <- list(
   Raw_SUBJ = lSource$Raw_SUBJ,
