@@ -21,7 +21,6 @@ Suggests:
     gh,
     glue,
     gsm,
-    gsm.datasim,
     gsm.kri,
     gsm.mapping,
     gsm.reporting,
@@ -38,8 +37,7 @@ Remotes:
     gsm=Gilead-BioStats/gsm@dev,
     gsm.mapping=Gilead-BioStats/gsm.mapping@dev,
     gsm.kri=Gilead-BioStats/gsm.kri@dev,
-    gsm.reporting=Gilead-BioStats/gsm.reporting@dev,
-    gsm.datasim=Gilead-BioStats/gsm.datasim@dev
+    gsm.reporting=Gilead-BioStats/gsm.reporting@dev
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
