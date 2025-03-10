@@ -136,7 +136,7 @@ lConfig <- list(
   },
   Domains = c(
     Raw_AE = function() {
-      clindata::rawplus_ae
+      lSource$Raw_AE
     },
     Mapped_AE = function() {
       Mapped_AE
