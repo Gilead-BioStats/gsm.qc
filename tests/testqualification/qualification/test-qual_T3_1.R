@@ -7,7 +7,7 @@ outputs <- map_vec(ae_workflow$steps[steps], ~ .x$output)
 
 ## Test Code
 testthat::test_that("Given pre-processed input data, a properly specified Workflow for a KRI creates summarized and flagged data", {
-  test <- robust_runworkflow(ae_workflow, list(Analysis_Input = gsm::analyticsInput), step = steps)
+  test <- robust_runworkflow(ae_workflow, list(Analysis_Input = gsm.core::analyticsInput), step = steps)
   expect_true(all(outputs %in% names(test)))
   expect_true(is.vector(test$vThreshold))
   expect_true(all(map_lgl(test[outputs[!(outputs %in% c("vThreshold", "lAnalysis"))]], is.data.frame)))
