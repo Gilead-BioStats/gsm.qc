@@ -171,7 +171,7 @@ Specifications %>%
 
 ```{r}
 ### One row per test
-# test <- scrape_new %>%
+ test <- scrape_new %>%
   mutate(result_new = ifelse(failed == 0, "Pass", "Fail")) %>%
   select(Tests, test, result_new, Function)
 
