@@ -17,7 +17,6 @@ Depends:
     R (>= 4.0)
 Suggests:
     cli,
-    clindata,
     dplyr,
     gh,
     glue,
@@ -35,7 +34,6 @@ Suggests:
     testthat, 
     yaml
 Remotes:
-    clindata=Gilead-BioStats/clindata,
     gsm.core=Gilead-BioStats/gsm.core@dev,
     gsm.mapping=Gilead-BioStats/gsm.mapping@dev,
     gsm.kri=Gilead-BioStats/gsm.kri@dev,

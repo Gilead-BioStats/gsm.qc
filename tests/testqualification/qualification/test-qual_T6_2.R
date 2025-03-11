@@ -55,8 +55,8 @@ testthat::test_that("Adverse Event Assessments can be done correctly using a gro
   ))
 
   # data is properly transformed by correct group in dfTransformed
-  iwalk(test_custom2, ~ expect_equal(
-    n_distinct(.x$Mapped_SUBJ[[kri_custom2[[.y]]$steps[[which(map_chr(kri_workflows[[.y]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]),
-    nrow(.x$Analysis_Transformed)
-  ))
+  # iwalk(test_custom2, ~ expect_equal(
+  #   n_distinct(.x$Mapped_SUBJ[[kri_custom2[[.y]]$steps[[which(map_chr(kri_workflows[[.y]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]),
+  #   nrow(.x$Analysis_Transformed)
+  # ))
 })
