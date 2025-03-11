@@ -1,4 +1,4 @@
-library(gsm)
+library(gsm.core)
 library(gsm.mapping)
 library(gsm.kri)
 library(gsm.reporting)

@@ -1,7 +1,11 @@
 ---
-title: "Qualification Report for the {gsm} R Package"
+title: "Qualification Report for the {gsm} R Packages"
 date: "Report Run Date: `r Sys.Date()`"
-subtitle: "`r paste0('{gsm} v', packageVersion('gsm'))`"
+subtitle: |
+        | `r paste0('{gsm.core} v', packageVersion('gsm.core'))`
+        | `r paste0('{gsm.mapping} v', packageVersion('gsm.mapping'))`
+        | `r paste0('{gsm.kri} v', packageVersion('gsm.kri'))`
+        | `r paste0('{gsm.reporting} v', packageVersion('gsm.reporting'))`
 description: "Report generated based on the qualification tests for all gsm packages"
 output: 
   pdf_document:
@@ -17,7 +21,7 @@ vignette: >
 
 ```{r setup, echo=FALSE, warning=FALSE}
 suppressPackageStartupMessages({
-  library(gsm)
+  library(gsm.core)
   library(gsm.mapping)
   library(gsm.kri)
   library(gsm.reporting)
@@ -91,11 +95,11 @@ Test cases for all `gsm` packages are written using the standard `testthat` work
 spec_list <- list.files(here::here('tests', 'testqualification', 'qualification'), pattern = "test-qual_", full.names = TRUE)
 
 scrape <- map_df(spec_list, function(x) {
-    testResultsRaw <- testthat::test_file(x, reporter = testthat::ListReporter, package = "gsm.qc") %>% 
+    testResultsRaw <- testthat::test_file(x, reporter = testthat::ListReporter, package = "gsm.qc") %>%
       as_tibble()
-    
+
     return(testResultsRaw)
-}) %>% 
+}) %>%
   mutate(Tests = gsub("test-qual_", "", file),
          Tests = gsub(".R", "", Tests))
 
@@ -106,7 +110,7 @@ funcs <- spec_df %>%
   rename(Function = Assessment) %>%
   distinct()
 
-testResultsIndividual <- left_join(scrape, funcs, by = "Tests") %>% 
+testResultsIndividual <- left_join(scrape, funcs, by = "Tests") %>%
   group_by(Function) %>%
   reframe(`Function Name` = unique(Function),
           `Number of Tests` = sum(nb),
@@ -116,7 +120,7 @@ testResultsIndividual <- left_join(scrape, funcs, by = "Tests") %>%
   arrange(`Function Name`) %>%
   select(-Function)
 
-scrape_new <- left_join(scrape, funcs, by = "Tests") 
+scrape_new <- left_join(scrape, funcs, by = "Tests")
 ```
 
 ```{r}
@@ -125,8 +129,8 @@ testResultsIndividual %>%
   tab_options(
     table.font.size = px(9),
     table.width = pct(80)  # Adjust width as needed
-  ) %>% 
-  opt_row_striping() 
+  ) %>%
+  opt_row_striping()
 ```
 
 # Test Results: Detailed
@@ -155,10 +159,10 @@ Specifications %>%
     table.font.size = px(9)
   )%>%
   cols_width(
-    `Spec Description` ~ px(180), 
-    `Associated Test IDs` ~ px(150) 
+    `Spec Description` ~ px(180),
+    `Associated Test IDs` ~ px(150)
   ) %>%
-  opt_row_striping() 
+  opt_row_striping()
 ```
 
 \newpage
@@ -167,7 +171,7 @@ Specifications %>%
 
 ```{r}
 ### One row per test
-test <- scrape_new %>%
+ test <- scrape_new %>%
   mutate(result_new = ifelse(failed == 0, "Pass", "Fail")) %>%
   select(Tests, test, result_new, Function)
 
@@ -186,11 +190,11 @@ Results %>%
     table.font.size = px(9)
   ) %>%
   cols_width(
-    `Function` ~ px(120), 
+    `Function` ~ px(120),
     `Spec ID` ~ px(90),
     `Test Description` ~ px(180)
   ) %>%
-  opt_row_striping() 
+  opt_row_striping()
 ```
 
 \newpage

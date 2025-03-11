@@ -96,7 +96,7 @@ robust_runworkflow <- function(
     cli::cli_h2(paste0("Workflow steps ", stepCount, " of ", length(lWorkflow$steps), ": `", steps$name, "`"))
 
     result0 <- purrr::safely(
-      ~ gsm::RunStep(
+      ~ gsm.core::RunStep(
         lStep = steps,
         lData = lWorkflow$lData,
         lMeta = lWorkflow$meta
