@@ -15,7 +15,7 @@ wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings",
                                strPackage = "gsm.mapping")
 workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)), strPackage = "gsm.kri")
 
-lSource <- gsm::lSource
+lSource <- gsm.core::lSource
 
 lRaw <- list(
   Raw_SUBJ = lSource$Raw_SUBJ,
