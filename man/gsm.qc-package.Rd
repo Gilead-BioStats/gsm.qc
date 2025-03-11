@@ -23,6 +23,7 @@ Useful links:
 Authors:
 \itemize{
   \item Zelos Zhu \email{zelos.zhu@atorusresearch.com}
+  \item Laura Maxwell \email{lkmaxwell23@gmail.com}
 }
 
 Other contributors:

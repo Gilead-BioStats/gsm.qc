@@ -48,7 +48,7 @@ Qualification for this repository is done to ensure that the package is function
 
 # Process Overview
 
-Each GSM assessment is independently qualified using **Specifications** and **Test Cases**, which are then compiled into a **Qualification Report**. 
+Each gsm assessment is independently qualified using **Specifications** and **Test Cases**, which are then compiled into a **Qualification Report**. 
 
 - **Specifications** - the expected behaviors that are being tested. 
 - **Test Cases** - testable pieces of code associated with Specifications.

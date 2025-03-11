@@ -1,7 +1,10 @@
 ---
 title: "Qualification Report for the {gsm} R Package"
 date: "Report Run Date: `r Sys.Date()`"
-subtitle: "`r paste0('{gsm} v', packageVersion('gsm'))`"
+subtitle: "`r paste0('{gsm.core} v', packageVersion('gsm.core'), ' ',
+              '{gsm.mapping} v', packageVersion('gsm.mapping'), ' ',
+              '{gsm.kri} v', packageVersion('gsm.kri'), ' ',
+              '{gsm.reporting} v', packageVersion('gsm.reporting'))`"
 description: "Report generated based on the qualification tests for all gsm packages"
 output: 
   pdf_document:
