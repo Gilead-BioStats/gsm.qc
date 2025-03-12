@@ -91,8 +91,6 @@ Test cases translate specifications into testable scripts to confirm that the pa
 
 Test cases for all `gsm` packages are written using the standard `testthat` workflow. A single test script is saved for each test case and is named following the convention `test_qual_{TestID}.R`, where `TestID` is the test case number. Test code within these scripts is written clearly and concisely to facilitate quick execution and interpretability. Note that a single test case may be associated with multiple specifications.
 
-# Test Results: Overview
-
 ```{r results = "hide"}
 spec_list <- list.files(here::here('tests', 'testqualification', 'qualification'), pattern = "test-qual_", full.names = TRUE)
 
@@ -126,16 +124,16 @@ scrape_new <- left_join(scrape, funcs, by = "Tests")
 ```
 
 ```{r}
-testResultsIndividual %>%
-  gt() %>%
-  tab_options(
-    table.font.size = px(9),
-    table.width = pct(80)  # Adjust width as needed
-  ) %>%
-  opt_row_striping()
+# testResultsIndividual %>%
+#   gt() %>%
+#   tab_options(
+#     table.font.size = px(9),
+#     table.width = pct(80)  # Adjust width as needed
+#   ) %>%
+#   opt_row_striping()
 ```
 
-# Test Results: Detailed
+# Test Results
 
 ## One Row Per Specification
 
