@@ -24,7 +24,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: any::rcmdcheck, github::${{ github.event.client_payload.repository }}@${{ github.event.client_payload.head_ref }}
           needs: check, qualification
 
       - name: build vignette
