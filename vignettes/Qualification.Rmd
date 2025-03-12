@@ -17,6 +17,8 @@ vignette: >
   %\VignetteIndexEntry{Qualification}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown_notangle}
+params: 
+  repo: "gsm.qc"
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE}
@@ -213,14 +215,14 @@ pander::pandoc.p('\\pagebreak')
 # Pull Request History
 
 ```{r prs, eval = FALSE}
-release <- gh("/repos/Gilead-BioStats/gsm.qc/releases", .token = remotes:::github_pat())[[1]]
+release <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/releases"), .token = remotes:::github_pat())[[1]]
 release_date <- ifelse(is.null(release$published_at), release$created_at, release$published_at)
 
 pr_at_date <- FALSE
 page_num <- 1
 prs <- list()
 while(pr_at_date != TRUE){
-  resp <- gh("/repos/Gilead-BioStats/gsm.qc/pulls", per_page = 100, .token = remotes:::github_pat(),
+  resp <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/pulls"), per_page = 100, .token = remotes:::github_pat(),
              .params = list(page = page_num, state = "all"))
 
   map(resp, function(x){
@@ -258,7 +260,7 @@ getRepoDetails <- function(x) {
     Reviewers = ""
   }
 
-  tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/gsm.qc/pulls/", PullRequest, "/reviews"))
+  tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/", params$repo, "/pulls/", PullRequest, "/reviews"))
 
   if (length(tempReviews) > 0) {
   ReviewStatus <- tempReviews[[1]][["state"]]

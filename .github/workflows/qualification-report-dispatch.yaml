@@ -28,10 +28,13 @@ jobs:
           needs: check, qualification
 
       - name: build vignette
+        env:
+          repo_name: ${{ github.event.client_payload.repository }}
         run: |
           install.packages("devtools")
           devtools::install(dependencies = T)
-          tools::buildVignette("./vignettes/Qualification.Rmd")
+          repo_name_short <- gsub("Gilead-BioStats/", "", repo_name)
+          gsm.kri::RenderRmd("./vignettes/Qualification.Rmd", lParams = list(repo = repo_name_short))
         shell: Rscript {0}
 
       # Upload the qulafication report to the release
