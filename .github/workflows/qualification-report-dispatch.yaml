@@ -34,8 +34,8 @@ jobs:
         run: |
           install.packages("devtools")
           devtools::install(dependencies = T)
-          repo_name_short <- gsub("Gilead-BioStats/", "", ${{ env.repo_name }})
-          devtools::install_github(paste0(${{ env.repo_name }}, "@", ${{ env.branch }}))
+          repo_name_short <- gsub("Gilead-BioStats/", "", Sys.getenv("repo_name"))
+          devtools::install_github(paste0(Sys.getenv("repo_name"), "@", Sys.getenv("branch")))
           gsm.kri::RenderRmd("./vignettes/Qualification.Rmd", lParams = list(repo = repo_name_short))
         shell: Rscript {0}
 
