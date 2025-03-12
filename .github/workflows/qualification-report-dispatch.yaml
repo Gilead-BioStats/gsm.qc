@@ -24,14 +24,19 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: any::rcmdcheck, any::rmarkdown
           needs: check, qualification
 
       - name: build vignette
+        env:
+          repo_name: ${{ github.event.client_payload.repository }}
+          branch: ${{ github.event.client_payload.head_ref }}
         run: |
           install.packages("devtools")
           devtools::install(dependencies = T)
-          tools::buildVignette("./vignettes/Qualification.Rmd")
+          repo_name_short <- gsub("Gilead-BioStats/", "", Sys.getenv("repo_name"))
+          devtools::install_github(paste0(Sys.getenv("repo_name"), "@", Sys.getenv("branch")))
+          rmarkdown::render("./vignettes/Qualification.Rmd", output_dir = getwd(), params = list(repo = repo_name_short))
         shell: Rscript {0}
 
       # Upload the qulafication report to the release

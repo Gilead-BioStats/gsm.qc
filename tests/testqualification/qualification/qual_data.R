@@ -1,7 +1,7 @@
 set.seed(123)
 
 ## Declare all the data
-lSource <- gsm::lSource
+lSource <- gsm.core::lSource
 
 # Step 0 - Data Ingestion - standardize tables/columns names
 lData <- list(

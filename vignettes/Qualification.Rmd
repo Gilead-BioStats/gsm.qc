@@ -17,6 +17,8 @@ vignette: >
   %\VignetteIndexEntry{Qualification}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown_notangle}
+params: 
+  repo: "gsm.qc"
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE}
@@ -89,8 +91,6 @@ Test cases translate specifications into testable scripts to confirm that the pa
 
 Test cases for all `gsm` packages are written using the standard `testthat` workflow. A single test script is saved for each test case and is named following the convention `test_qual_{TestID}.R`, where `TestID` is the test case number. Test code within these scripts is written clearly and concisely to facilitate quick execution and interpretability. Note that a single test case may be associated with multiple specifications.
 
-# Test Results: Overview
-
 ```{r results = "hide"}
 spec_list <- list.files(here::here('tests', 'testqualification', 'qualification'), pattern = "test-qual_", full.names = TRUE)
 
@@ -124,16 +124,17 @@ scrape_new <- left_join(scrape, funcs, by = "Tests")
 ```
 
 ```{r}
-testResultsIndividual %>%
-  gt() %>%
-  tab_options(
-    table.font.size = px(9),
-    table.width = pct(80)  # Adjust width as needed
-  ) %>%
-  opt_row_striping()
+## commented out because not currently displaying properly in the GHA-generated report
+# testResultsIndividual %>%
+#   gt() %>%
+#   tab_options(
+#     table.font.size = px(9),
+#     table.width = pct(80)  # Adjust width as needed
+#   ) %>%
+#   opt_row_striping()
 ```
 
-# Test Results: Detailed
+# Test Results
 
 ## One Row Per Specification
 
@@ -213,14 +214,14 @@ pander::pandoc.p('\\pagebreak')
 # Pull Request History
 
 ```{r prs, eval = FALSE}
-release <- gh("/repos/Gilead-BioStats/gsm.qc/releases", .token = remotes:::github_pat())[[1]]
+release <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/releases"), .token = remotes:::github_pat())[[1]]
 release_date <- ifelse(is.null(release$published_at), release$created_at, release$published_at)
 
 pr_at_date <- FALSE
 page_num <- 1
 prs <- list()
 while(pr_at_date != TRUE){
-  resp <- gh("/repos/Gilead-BioStats/gsm.qc/pulls", per_page = 100, .token = remotes:::github_pat(),
+  resp <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/pulls"), per_page = 100, .token = remotes:::github_pat(),
              .params = list(page = page_num, state = "all"))
 
   map(resp, function(x){
@@ -258,7 +259,7 @@ getRepoDetails <- function(x) {
     Reviewers = ""
   }
 
-  tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/gsm.qc/pulls/", PullRequest, "/reviews"))
+  tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/", params$repo, "/pulls/", PullRequest, "/reviews"))
 
   if (length(tempReviews) > 0) {
   ReviewStatus <- tempReviews[[1]][["state"]]
