@@ -124,6 +124,7 @@ scrape_new <- left_join(scrape, funcs, by = "Tests")
 ```
 
 ```{r}
+## commented out because not currently displaying properly in the GHA-generated report
 # testResultsIndividual %>%
 #   gt() %>%
 #   tab_options(
