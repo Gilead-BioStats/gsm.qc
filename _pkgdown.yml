@@ -15,5 +15,5 @@ articles:
   - title: "Quality"
     navbar: "Quality"
     contents:
-      - articles/QualificationWorkflow
-      - articles/Qualification
+      - QualificationWorkflow
+      - Qualification

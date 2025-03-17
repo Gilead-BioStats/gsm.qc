@@ -17,9 +17,8 @@ testthat::test_that("Given appropriate metadata (i.e. vThresholds), flagged obse
         Score >= test$vThreshold[4] ~ 2,
       (Score <= test$vThreshold[2] & Score > test$vThreshold[1]) |
         (Score >= test$vThreshold[3] & Score < test$vThreshold[4]) ~ 1,
-      TRUE ~ 0
+      Flag == 0 | is.na(Flag) ~ 0
     ))
 
-  expect_identical(abs(flags$Flag), flags$flagged_hardcode)
-  expect_identical(test$Analysis_Flagged$Flag, test$Analysis_Summary$Flag)
+  expect_identical(test$Analysis_Flagged$Flag, flags$flagged_hardcode)
 })

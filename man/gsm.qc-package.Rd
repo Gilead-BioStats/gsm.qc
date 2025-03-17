@@ -6,7 +6,7 @@
 \alias{gsm.qc-package}
 \title{gsm.qc: Good Statistical Monitoring Testing Suite}
 \description{
-The Good Statistical Monitoring or 'gsm' R packages provides a framework for statistical data monitoring. This package provides all a testing suite for all the packages involved.
+The Good Statistical Monitoring or 'gsm' R packages provides a framework for statistical data monitoring. This package provides a testing suite for all the packages involved and is the source of the qualification testing report.
 }
 \seealso{
 Useful links:
@@ -23,6 +23,7 @@ Useful links:
 Authors:
 \itemize{
   \item Zelos Zhu \email{zelos.zhu@atorusresearch.com}
+  \item Laura Maxwell \email{lkmaxwell23@gmail.com}
 }
 
 Other contributors:

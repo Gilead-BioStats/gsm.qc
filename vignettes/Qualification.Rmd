@@ -1,7 +1,12 @@
 ---
-title: "Qualification Report for the {gsm} R Package"
+title: "Qualification Report for the {gsm} R Packages"
 date: "Report Run Date: `r Sys.Date()`"
-subtitle: "`r paste0('{gsm} v', packageVersion('gsm'))`"
+subtitle: |
+        | `r paste0('{gsm.core} v', packageVersion('gsm.core'))`
+        | `r paste0('{gsm.mapping} v', packageVersion('gsm.mapping'))`
+        | `r paste0('{gsm.kri} v', packageVersion('gsm.kri'))`
+        | `r paste0('{gsm.reporting} v', packageVersion('gsm.reporting'))`
+description: "Report generated based on the qualification tests for all gsm packages"
 output: 
   pdf_document:
     toc: true
@@ -12,11 +17,13 @@ vignette: >
   %\VignetteIndexEntry{Qualification}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown_notangle}
+params: 
+  repo: "gsm.qc"
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE}
 suppressPackageStartupMessages({
-  library(gsm)
+  library(gsm.core)
   library(gsm.mapping)
   library(gsm.kri)
   library(gsm.reporting)
@@ -52,15 +59,15 @@ spec_df <- import_specs()
 
 Risk-Based Quality Monitoring (RBQM) is a proactive approach to clinical trial monitoring that focuses on identifying and addressing the most critical risks to the integrity of study data and patient safety. This approach aims to ensure that study data are accurate, reliable, and credible while optimizing the use of resources and minimizing the burden on study sites.
 
-The `{gsm}` R package supports RBQM by performing risk assessments primarily focused on detecting differences in quality at the site level. This approach is intended to detect potential issues related to critical data or process(es) across the major risk categories of safety, efficacy, disposition, treatment, and general quality. Each category consists of one or more risk assessment(s). Each risk assessment analyzes the data to flag sites with potential outliers and provides a visualization to help the user understand the issue.
+The `{gsm}` suite of R packages supports RBQM by performing risk assessments primarily focused on detecting differences in quality at the site level. This approach is intended to detect potential issues related to critical data or process(es) across the major risk categories of safety, efficacy, disposition, treatment, and general quality. Each category consists of one or more risk assessment(s). Each risk assessment analyzes the data to flag sites with potential outliers and provides a visualization to help the user understand the issue.
 
 # Scope
 
-Qualification testing ensures that core functions execute as expected on a system-wide scale. Qualification includes executing various functional, performance, and usability testing. Qualification tests are designed to provide developers with a repeatable process that is easy to update and document. This document summarizes the qualification testing performed on `{gsm}` functions essential to the analysis workflow.
+Qualification testing ensures that core functions execute as expected on a system-wide scale. Qualification includes executing various functional, performance, and usability testing. Qualification tests are designed to provide developers with a repeatable process that is easy to update and document. This document summarizes the qualification testing performed on `gsm` functions essential to the analysis workflow.
 
 # Process Overview
 
-Each essential `{gsm}` workflow function is independently qualified using specifications and test cases compiled in this report. Details are provided below.
+Each essential `gsm` workflow function is independently qualified using specifications and test cases compiled in this report. Details are provided below.
 
 ## Specifications
 
@@ -72,9 +79,9 @@ Each specification includes the following components:
 
 -   **Risk Assessment**
 
-    -   **Risk Level:** assigned a value of "Low", "Medium", or "High", corresponding to the risk associated with the specification failing
+-   **Risk Level:** assigned a value of "Low", "Medium", or "High", corresponding to the risk associated with the specification failing
 
-    -   **Risk Impact:** assigned a value of "Low", "Medium", or "High", corresponding to the severity of the impact associated with the specification failing
+-   **Risk Impact:** assigned a value of "Low", "Medium", or "High", corresponding to the severity of the impact associated with the specification failing
 
 -   **Test Cases:** lists measurable test cases associated with the specification
 
@@ -82,19 +89,17 @@ Each specification includes the following components:
 
 Test cases translate specifications into testable scripts to confirm that the package functions meet the established requirements. Test cases represent how a user may utilize the function to help identify code gaps and support testing automation.
 
-Test cases for `{gsm}` are written using the standard `testthat` workflow. A single test script is saved for each test case and is named following the convention `test_qual_{TestID}.R`, where `TestID` is the test case number. Test code within these scripts is written clearly and concisely to facilitate quick execution and interpretability. Note that a single test case may be associated with multiple specifications.
-
-# Test Results: Overview
+Test cases for all `gsm` packages are written using the standard `testthat` workflow. A single test script is saved for each test case and is named following the convention `test_qual_{TestID}.R`, where `TestID` is the test case number. Test code within these scripts is written clearly and concisely to facilitate quick execution and interpretability. Note that a single test case may be associated with multiple specifications.
 
 ```{r results = "hide"}
 spec_list <- list.files(here::here('tests', 'testqualification', 'qualification'), pattern = "test-qual_", full.names = TRUE)
 
 scrape <- map_df(spec_list, function(x) {
-    testResultsRaw <- testthat::test_file(x, reporter = testthat::ListReporter, package = "gsm.qc") %>% 
+    testResultsRaw <- testthat::test_file(x, reporter = testthat::ListReporter, package = "gsm.qc") %>%
       as_tibble()
-    
+
     return(testResultsRaw)
-}) %>% 
+}) %>%
   mutate(Tests = gsub("test-qual_", "", file),
          Tests = gsub(".R", "", Tests))
 
@@ -105,7 +110,7 @@ funcs <- spec_df %>%
   rename(Function = Assessment) %>%
   distinct()
 
-testResultsIndividual <- left_join(scrape, funcs, by = "Tests") %>% 
+testResultsIndividual <- left_join(scrape, funcs, by = "Tests") %>%
   group_by(Function) %>%
   reframe(`Function Name` = unique(Function),
           `Number of Tests` = sum(nb),
@@ -115,20 +120,21 @@ testResultsIndividual <- left_join(scrape, funcs, by = "Tests") %>%
   arrange(`Function Name`) %>%
   select(-Function)
 
-scrape_new <- left_join(scrape, funcs, by = "Tests") 
+scrape_new <- left_join(scrape, funcs, by = "Tests")
 ```
 
 ```{r}
-testResultsIndividual %>%
-  gt() %>%
-  tab_options(
-    table.font.size = px(9),
-    table.width = pct(80)  # Adjust width as needed
-  ) %>% 
-  opt_row_striping() 
+## commented out because not currently displaying properly in the GHA-generated report
+# testResultsIndividual %>%
+#   gt() %>%
+#   tab_options(
+#     table.font.size = px(9),
+#     table.width = pct(80)  # Adjust width as needed
+#   ) %>%
+#   opt_row_striping()
 ```
 
-# Test Results: Detailed
+# Test Results
 
 ## One Row Per Specification
 
@@ -154,10 +160,10 @@ Specifications %>%
     table.font.size = px(9)
   )%>%
   cols_width(
-    `Spec Description` ~ px(180), 
-    `Associated Test IDs` ~ px(150) 
+    `Spec Description` ~ px(180),
+    `Associated Test IDs` ~ px(150)
   ) %>%
-  opt_row_striping() 
+  opt_row_striping()
 ```
 
 \newpage
@@ -166,7 +172,7 @@ Specifications %>%
 
 ```{r}
 ### One row per test
-test <- scrape_new %>%
+ test <- scrape_new %>%
   mutate(result_new = ifelse(failed == 0, "Pass", "Fail")) %>%
   select(Tests, test, result_new, Function)
 
@@ -185,11 +191,11 @@ Results %>%
     table.font.size = px(9)
   ) %>%
   cols_width(
-    `Function` ~ px(120), 
+    `Function` ~ px(120),
     `Spec ID` ~ px(90),
     `Test Description` ~ px(180)
   ) %>%
-  opt_row_striping() 
+  opt_row_striping()
 ```
 
 \newpage
@@ -208,14 +214,14 @@ pander::pandoc.p('\\pagebreak')
 # Pull Request History
 
 ```{r prs, eval = FALSE}
-release <- gh("/repos/Gilead-BioStats/gsm.qc/releases", .token = remotes:::github_pat())[[1]]
+release <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/releases"), .token = remotes:::github_pat())[[1]]
 release_date <- ifelse(is.null(release$published_at), release$created_at, release$published_at)
 
 pr_at_date <- FALSE
 page_num <- 1
 prs <- list()
 while(pr_at_date != TRUE){
-  resp <- gh("/repos/Gilead-BioStats/gsm.qc/pulls", per_page = 100, .token = remotes:::github_pat(),
+  resp <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/pulls"), per_page = 100, .token = remotes:::github_pat(),
              .params = list(page = page_num, state = "all"))
 
   map(resp, function(x){
@@ -253,7 +259,7 @@ getRepoDetails <- function(x) {
     Reviewers = ""
   }
 
-  tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/gsm.qc/pulls/", PullRequest, "/reviews"))
+  tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/", params$repo, "/pulls/", PullRequest, "/reviews"))
 
   if (length(tempReviews) > 0) {
   ReviewStatus <- tempReviews[[1]][["state"]]

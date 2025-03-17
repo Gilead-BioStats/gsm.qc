@@ -1,6 +1,7 @@
 ---
 title: "Qualification Workflow"
 date: 'Date: `r Sys.Date()`'
+description: "Vignette that describes the workflow of the qualification process for gsm packages." 
 output:
   rmarkdown::html_vignette
 vignette: >
@@ -11,7 +12,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 suppressPackageStartupMessages({
-  library(gsm)
+  library(gsm.core)
   library(gsm.mapping)
   library(gsm.kri)
   library(gsm.reporting)
@@ -47,7 +48,7 @@ Qualification for this repository is done to ensure that the package is function
 
 # Process Overview
 
-Each GSM assessment is independently qualified using **Specifications** and **Test Cases**, which are then compiled into a **Qualification Report**. 
+Each gsm assessment is independently qualified using **Specifications** and **Test Cases**, which are then compiled into a **Qualification Report**. 
 
 - **Specifications** - the expected behaviors that are being tested. 
 - **Test Cases** - testable pieces of code associated with Specifications.
@@ -140,11 +141,11 @@ testthat::test_that("Given raw participant-level data, a properly specified Work
 
 # Qualification Report
 
-The Qualification Report is generated to document and display the qualification that the code has been through.  The report lives as a Qualification vignette in `{gsm}` and is rendered during other workflows.  The Qualification Report is also attached to each release and included in the `{pkgdown}` site to display the qualification status of `{gsm}`.  The sections of the Qualification Report are outlined below.
+The Qualification Report is generated to document and display the qualification that the code has been through.  The report lives as a Qualification vignette in `{gsm.qc}` and is rendered during workflows in all `gsm` core packages when they push to `main` or have a release.  The Qualification Report is also attached to each release and included in the `{pkgdown}` site to display the qualification status of each `gsm` package.  The sections of the Qualification Report are outlined below.
 
 ### Qualification Testing Results
 
-Using the specifications, test cases, and test code outlined above the qualification status of all assessments currently qualified within `{gsm}` is rendered, consisting of smaller sections for each assessment.  These smaller sections will include the procedure that is being qualified, which should correspond to the function that is used for that procedure.  An overview of the specifications is also included that has the ID, Description, Risk Level, Risk Impact, and associated test cases corresponding to each specification.  This information is pulled from the Specification Spreadsheet file (`qualification_specs.csv`) outlined above.  
+Using the specifications, test cases, and test code outlined above the qualification status of all assessments currently qualified within the `{gsm}` suite of packages is rendered, consisting of smaller sections for each assessment.  These smaller sections will include the procedure that is being qualified, which should correspond to the function that is used for that procedure.  An overview of the specifications is also included that has the ID, Description, Risk Level, Risk Impact, and associated test cases corresponding to each specification.  This information is pulled from the Specification Spreadsheet file (`qualification_specs.csv`) outlined above.  
 
 #### Test Results: Overview
 
