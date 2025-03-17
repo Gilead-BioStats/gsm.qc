@@ -1,6 +1,6 @@
 Package: gsm.qc
 Title: Good Statistical Monitoring Testing Suite
-Version: 0.0.2
+Version: 1.0.0
 Authors@R: c(
     person("Jeremy", "Wildfire", , "jwildfire@gmail.com", role = c("aut", "cre")),
     person("Zelos", "Zhu", , "zelos.zhu@atorusresearch.com", role = "aut"),
