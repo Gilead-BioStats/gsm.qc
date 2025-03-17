@@ -7,12 +7,16 @@ library(purrr)
 library(cli)
 library(glue)
 set.seed(123)
-core_mappings <- c("AE", "COUNTRY", "DATACHG", "DATAENT", "ENROLL", "LB",
-                   "PD", "QUERY", "STUDY", "STUDCOMP", "SDRGCOMP", "SITE", "SUBJ")
+core_mappings <- c(
+  "AE", "COUNTRY", "DATACHG", "DATAENT", "ENROLL", "LB",
+  "PD", "QUERY", "STUDY", "STUDCOMP", "SDRGCOMP", "SITE", "SUBJ"
+)
 
-wf_mapping <- MakeWorkflowList(strPath = "workflow/1_mappings",
-                               strNames = core_mappings,
-                               strPackage = "gsm.mapping")
+wf_mapping <- MakeWorkflowList(
+  strPath = "workflow/1_mappings",
+  strNames = core_mappings,
+  strPackage = "gsm.mapping"
+)
 workflows <- MakeWorkflowList(strNames = paste0("kri", sprintf("%04d", 1:2)), strPackage = "gsm.kri")
 
 lSource <- gsm.core::lSource
@@ -255,4 +259,3 @@ test_that("RunWorkflow errors out if the data save method does not have expected
     "must include a function named .SaveData."
   )
 })
-
