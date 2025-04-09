@@ -28,7 +28,8 @@ lData <- list(
     rename(State = state) %>%
     rename(Country = country),
   Raw_STUDY = lSource$Raw_STUDY %>%
-    rename(studyid = protocol_number)
+    rename(studyid = protocol_number),
+  Raw_PK = lSource$Raw_PK
 )
 
 ## Data with missing values (15% NA's)
