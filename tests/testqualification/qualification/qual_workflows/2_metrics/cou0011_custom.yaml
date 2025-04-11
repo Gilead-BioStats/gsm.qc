@@ -9,7 +9,7 @@ meta:
   Model: Normal Approximation
   Score: Adjusted Z-Score
   AnalysisType: binary
-  Threshold: -5,-3,3,5
+  Threshold: "3,5"
   nMinDenominator: 300
 spec:
   Mapped_SUBJ:
@@ -61,6 +61,10 @@ steps:
     params:
       dfAnalyzed: Analysis_Analyzed
       vThreshold: vThreshold
+      vFlag:
+        - 0
+        - 1
+        - 2
   - output: Analysis_Summary
     name: Summarize
     params:

@@ -8,15 +8,18 @@ test_default <- robust_runworkflow(ae_workflow_default, mapped_data)
 
 hardcode_flag_custom <- test_custom$Analysis_Flagged %>%
   mutate("hardcode_flag" = case_when(
+    Denominator < 30 ~ NA,
     Score <= test_custom$vThreshold[1] |
       Score >= test_custom$vThreshold[4] ~ 2,
     Score > test_custom$vThreshold[1] & Score <= test_custom$vThreshold[2] |
       Score < test_custom$vThreshold[4] & Score >= test_custom$vThreshold[3] ~ 1,
+
     TRUE ~ 0
   ))
 
 hardcode_flag_default <- test_default$Analysis_Flagged %>%
   mutate("hardcode_flag" = case_when(
+    Denominator < 30 ~ NA,
     Score <= test_default$vThreshold[1] |
       Score >= test_default$vThreshold[4] ~ 2,
     Score > test_default$vThreshold[1] & Score <= test_default$vThreshold[2] |
