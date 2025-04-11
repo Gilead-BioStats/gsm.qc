@@ -36,7 +36,7 @@ Suggests:
 Remotes:
     gsm.core=Gilead-BioStats/gsm.core@v1.1.0,
     gsm.mapping=Gilead-BioStats/gsm.mapping@v1.0.1,
-    gsm.kri=Gilead-BioStats/gsm.kri@gsm.kri-1.1.0-rc,
+    gsm.kri=Gilead-BioStats/gsm.kri@gsm.kri-v1.1.0-rc,
     gsm.reporting=Gilead-BioStats/gsm.reporting@gsm.reporting-v1.0.1-rc
 VignetteBuilder: 
     knitr
