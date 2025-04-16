@@ -15,9 +15,8 @@ testthat::test_that("PK Compliance Assessments can be done correctly using a gro
 
   # data is properly transformed by correct group in dfTransformed
   iwalk(test, ~ expect_true(
-   all(.x$Analysis_Transformed$GroupID %in%
-     unique(.x$Mapped_SUBJ[[kri_workflows[[.y]]$steps[[which(map_chr(kri_workflows[[.y]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])
-   )
+    all(.x$Analysis_Transformed$GroupID %in%
+      unique(.x$Mapped_SUBJ[[kri_workflows[[.y]]$steps[[which(map_chr(kri_workflows[[.y]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]))
   ))
 
   ## custom -------------------------------------------
