@@ -34,10 +34,10 @@ Suggests:
     testthat, 
     yaml
 Remotes:
-    gsm.core=Gilead-BioStats/gsm.core@main,
-    gsm.mapping=Gilead-BioStats/gsm.mapping@main,
-    gsm.kri=Gilead-BioStats/gsm.kri@main,
-    gsm.reporting=Gilead-BioStats/gsm.reporting@main
+    gsm.core=Gilead-BioStats/gsm.core@v1.1.0,
+    gsm.mapping=Gilead-BioStats/gsm.mapping@v1.0.1,
+    gsm.kri=Gilead-BioStats/gsm.kri@v1.1.0,
+    gsm.reporting=Gilead-BioStats/gsm.reporting@v1.0.1
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

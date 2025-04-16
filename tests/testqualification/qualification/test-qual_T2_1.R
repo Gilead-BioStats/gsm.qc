@@ -18,6 +18,7 @@ testthat::test_that("Given raw participant-level data, a properly specified Work
   expect_true(all(outputs %in% names(test)))
   flags <- test$Analysis_Flagged %>%
     mutate(hardcode_flag = case_when(
+      Denominator < 30 ~ NA,
       Score <= test$vThreshold[1] ~ -2,
       Score > test$vThreshold[1] & Score <= test$vThreshold[2] ~ -1,
       Score >= test$vThreshold[3] & Score < test$vThreshold[4] ~ 1,

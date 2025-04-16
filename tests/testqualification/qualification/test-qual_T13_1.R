@@ -21,8 +21,8 @@ testthat::test_that("Given appropriate raw participant-level data, a Query Rate 
     )
   )
 
-  # verify vThreshold was converted to threshold vector of length 4
-  walk(test, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 4))
+  # verify vThreshold was converted to threshold vector of length 2
+  walk(test, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 2))
 
 
   # custom ----------------------------------
