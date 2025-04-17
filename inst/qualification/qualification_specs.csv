@@ -23,3 +23,5 @@ Spec,Test.ID,Tests,N.Tests,Function.Name,Description,Risk,Impact,Spec.Status,Spe
 12,2,T12_2,16,Query Age Assessment,"Query Age Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.",High,High,complete,,complete
 13,1,T13_1,11,Query Rate Assessment,"Given appropriate raw participant-level data, a Query Rate Assessment can be done using the Normal Approximation method.",High,High,complete,,complete
 13,2,T13_2,8,Query Rate Assessment,"Query Rate Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.",High,High,complete,,complete
+14,1,T14_1,11,PK Compliance Rate Assessment,"Given appropriate raw participant-level data, a PK Compliance Rate Assessment can be done using the Identity method.",High,High,complete,,complete
+14,2,T14_2,8,PK Compliance Rate Assessment,"PK Compliance Rate Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.",High,High,complete,,complete

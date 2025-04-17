@@ -1,75 +1,85 @@
 meta:
   Type: Analysis
-  ID: cou0010_custom
+  ID: kri0013_custom
   GroupLevel: Sex
-  Abbreviation: ODAT
-  Metric: Outstanding Data Entry Rate
-  Numerator: Data Pages Entered > 10 Days
-  Denominator: Total Data Pages
-  Model: Normal Approximation
-  Score: Adjusted Z-Score
-  AnalysisType: binary
-  Threshold: "3,5"
-  nMinDenominator: 300
+  Abbreviation: PK
+  Metric: PK Collection Compliance Rate
+  Numerator: PK Samples Collected
+  Denominator: PK Samples Expected
+  Model: Identity
+  Score: PK Collection Compliance Rate
+  AnalysisType: identity
+  Threshold: "0.7,0.55"
+  Flag: "2,1,0"
+  AccrualThreshold: 3
+  AccrualMetric: Numerator
 spec:
   Mapped_SUBJ:
     subjid:
       required: true
       type: character
+    invid:
+      required: true
+      type: character
     sex:
       required: true
       type: character
-  Mapped_DATAENT:
+  Mapped_PK:
     subjid:
       required: true
       type: character
-    data_entry_lag:
+    pktpt:
       required: true
-      type: integer
+      type: character
+    pkperf:
+      required: true
+      type: character
 steps:
   - output: vThreshold
-    name: ParseThreshold
+    name: gsm.core::ParseThreshold
     params:
       strThreshold: Threshold
-  - output: Temp_LAG
-    name: RunQuery
+  - output: vFlag
+    name: gsm.core::ParseThreshold
     params:
-      df: Mapped_DATAENT
-      strQuery: "SELECT * FROM df WHERE data_entry_lag > 10"
+      strThreshold: Flag
+      bSort: false
+  - output: Temp_PK_Complete
+    name: gsm.core::RunQuery
+    params:
+      df: Mapped_PK
+      strQuery: "SELECT * FROM df WHERE pkperf = 'Yes'"
   - output: Analysis_Input
-    name: Input_Rate
+    name: gsm.core::Input_Rate
     params:
       dfSubjects: Mapped_SUBJ
-      dfNumerator: Temp_LAG
-      dfDenominator: Mapped_DATAENT
+      dfNumerator: Temp_PK_Complete
+      dfDenominator: Mapped_PK
       strSubjectCol: subjid
       strGroupCol: sex
       strGroupLevel: GroupLevel
       strNumeratorMethod: Count
       strDenominatorMethod: Count
   - output: Analysis_Transformed
-    name: Transform_Rate
+    name: gsm.core::Transform_Rate
     params:
       dfInput: Analysis_Input
   - output: Analysis_Analyzed
-    name: Analyze_NormalApprox
+    name: gsm.core::Analyze_Identity
     params:
       dfTransformed: Analysis_Transformed
-      strType: AnalysisType
   - output: Analysis_Flagged
-    name: Flag_NormalApprox
+    name: gsm.core::Flag
     params:
       dfAnalyzed: Analysis_Analyzed
       vThreshold: vThreshold
-      vFlag:
-        - 0
-        - 1
-        - 2
+      vFlag: vFlag
+      nAccrualThreshold: AccrualThreshold
+      strAccrualMetric: AccrualMetric
   - output: Analysis_Summary
-    name: Summarize
+    name: gsm.core::Summarize
     params:
       dfFlagged: Analysis_Flagged
-      nMinDenominator: nMinDenominator
   - output: lAnalysis
     name: list
     params:
