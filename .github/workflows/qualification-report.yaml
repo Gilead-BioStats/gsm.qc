@@ -2,7 +2,7 @@ on:
   release:
     types: [published]
   pull_request:
-    branches: main
+    branches: dev
   workflow_dispatch:
 
 name: qualification-report
