@@ -13,7 +13,7 @@ testthat::test_that("Given summarized analytics data and historical reporting re
   # test output stucture
   expect_true(all(map_lgl(test, \(x) is.data.frame(x))))
   expect_equal(nrow(test$Reporting_Metrics), length(analyzed))
-  expect_equal(nrow(test$Reporting_Results), analyzed %>% map(\(x) {nrow(x$Analysis_Summary)}) %>% do.call(sum, .)))
+  expect_equal(nrow(test$Reporting_Results), analyzed %>% map(\(x) {nrow(x$Analysis_Summary)}) %>% do.call(sum, .))
 
   # test output content
   expect_true(all(outputs %in% names(test)))
