@@ -6,7 +6,7 @@ kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 10), sprintf("cou%04d
 testthat::test_that("Data Entry Lag Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {
   ## regular -----------------------------------------
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:5))
-  a <- warnings(test) %>% names()
+  a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% capture_warnings()
   removed <- gsub("\033\\[38;5;253m", "",a[1]) %>%
     strsplit(., " ") %>%
     unlist() %>%
