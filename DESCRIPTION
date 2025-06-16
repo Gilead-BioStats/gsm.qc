@@ -35,9 +35,9 @@ Suggests:
     yaml
 Remotes:
     gsm.core=Gilead-BioStats/gsm.core@fix-sample-data-visit,
-    gsm.mapping=Gilead-BioStats/gsm.mapping@fix-72,
+    gsm.mapping=Gilead-BioStats/gsm.mapping@main,
     gsm.kri=Gilead-BioStats/gsm.kri@main,
-    gsm.reporting=Gilead-BioStats/gsm.reporting@dev
+    gsm.reporting=Gilead-BioStats/gsm.reporting@main
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
