@@ -77,6 +77,32 @@ testthat::test_that("Given summarized analytics data and historical reporting re
   dfChanges <- gsm.kri::FilterByLatestSnapshotDate(dfChanges)
 
   expect_equal(test$Reporting_Results, dfChanges)
+
+  # test individual columns by hand
+  ## join with historical results to check previous values
+  results_joined <- left_join(test$Reporting_Results,
+            historical_reporting_results[historical_reporting_results$SnapshotDate == max(historical_reporting_results$SnapshotDate),],
+            by = c("StudyID", "GroupLevel", "GroupID", "MetricID"))
+  expect_equal(sort(test$Reporting_Results$Numerator_Change),
+               sort(results_joined$Numerator.x - results_joined$Numerator.y))
+  expect_equal(sort(test$Reporting_Results$Denominator_Change),
+               sort(results_joined$Denominator.x - results_joined$Denominator.y))
+  expect_equal(sort(test$Reporting_Results$Metric_Change),
+               sort(results_joined$Metric.x - results_joined$Metric.y))
+  expect_equal(sort(test$Reporting_Results$Score_Change),
+               sort(results_joined$Score.x - results_joined$Score.y))
+  expect_equal(sort(test$Reporting_Results$Flag_Change),
+               sort(results_joined$Flag.x - results_joined$Flag.y))
+  expect_equal(sort(test$Reporting_Results$Numerator_PercentChange),
+               sort((results_joined$Numerator.x - results_joined$Numerator.y) / results_joined$Numerator.y * 100))
+  expect_equal(sort(test$Reporting_Results$Denominator_PercentChange),
+               sort((results_joined$Denominator.x - results_joined$Denominator.y) / results_joined$Denominator.y * 100))
+  expect_equal(sort(test$Reporting_Results$Metric_PercentChange),
+               sort((results_joined$Metric.x - results_joined$Metric.y) / results_joined$Metric.y * 100))
+  expect_equal(sort(test$Reporting_Results$Score_PercentChange),
+               sort((results_joined$Score.x - results_joined$Score.y) / results_joined$Score.y * 100))
+  expect_equal(sort(test$Reporting_Results$Flag_PercentChange),
+               sort((results_joined$Flag.x - results_joined$Flag.y) / results_joined$Flag.y * 100))
   })
 
 
