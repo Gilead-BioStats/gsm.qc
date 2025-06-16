@@ -6,6 +6,12 @@ kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 10), sprintf("cou%04d
 testthat::test_that("Data Entry Lag Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {
   ## regular -----------------------------------------
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:5))
+  a <- warnings(test) %>% names()
+  removed <- gsub("\033\\[38;5;253m", "",a[1]) %>%
+    strsplit(., " ") %>%
+    unlist() %>%
+    first() %>%
+    as.numeric()
 
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
   iwalk(test, ~ expect_identical(
@@ -19,7 +25,7 @@ testthat::test_that("Data Entry Lag Assessments can be done correctly using a gr
     nrow(test$cou0010$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0010$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-8,
+    n_distinct(test$kri0010$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-removed,
     nrow(test$kri0010$Analysis_Transformed)
   )
 

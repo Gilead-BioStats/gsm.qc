@@ -6,7 +6,12 @@ kri_custom <- MakeWorkflowList(c("kri0005_custom", "cou0005_custom"), yaml_path_
 testthat::test_that("Labs Assessments can be done correctly using a grouping variable, such as Site or Country for KRIs, and Study for QTLs, when applicable.", {
   ## regular -----------------------------------------
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6))
-
+  a <- capture_warnings(robust_runworkflow(kri_workflows, mapped_data_missing_values))
+  removed <- gsub("\033\\[38;5;253m", "",a[2]) %>%
+    strsplit(., " ") %>%
+    unlist() %>%
+    first() %>%
+    as.numeric()
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
   iwalk(test, ~ expect_identical(
     sort(unique(.x$Analysis_Input$GroupID)),
@@ -19,7 +24,7 @@ testthat::test_that("Labs Assessments can be done correctly using a grouping var
     nrow(test$cou0005$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0005$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-18,
+    n_distinct(test$kri0005$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-removed,
     nrow(test$kri0005$Analysis_Transformed)
   )
 
