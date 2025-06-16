@@ -34,7 +34,7 @@ Suggests:
     testthat, 
     yaml
 Remotes:
-    gsm.core=Gilead-BioStats/gsm.core@fix-sample-data-visit,
+    gsm.core=Gilead-BioStats/gsm.core@main,
     gsm.mapping=Gilead-BioStats/gsm.mapping@main,
     gsm.kri=Gilead-BioStats/gsm.kri@main,
     gsm.reporting=Gilead-BioStats/gsm.reporting@main
