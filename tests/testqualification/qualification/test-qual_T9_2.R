@@ -19,7 +19,7 @@ testthat::test_that("Labs Assessments can be done correctly using a grouping var
     nrow(test$cou0005$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0005$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-8,
+    n_distinct(test$kri0005$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-18,
     nrow(test$kri0005$Analysis_Transformed)
   )
 

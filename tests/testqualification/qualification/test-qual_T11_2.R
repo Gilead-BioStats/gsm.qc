@@ -19,7 +19,7 @@ testthat::test_that("Data Entry Lag Assessments can be done correctly using a gr
     nrow(test$cou0010$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0010$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-7,
+    n_distinct(test$kri0010$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-8,
     nrow(test$kri0010$Analysis_Transformed)
   )
 

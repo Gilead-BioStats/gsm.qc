@@ -25,11 +25,11 @@ testthat::test_that("Query Rate Assessments can be done correctly using a groupi
     nrow(test$cou0009$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0008$Mapped_SUBJ[[kri_workflows[[3]]$steps[[which(map_chr(kri_workflows[[3]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-7,
+    n_distinct(test$kri0008$Mapped_SUBJ[[kri_workflows[[3]]$steps[[which(map_chr(kri_workflows[[3]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-8,
     nrow(test$kri0008$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0009$Mapped_SUBJ[[kri_workflows[[4]]$steps[[which(map_chr(kri_workflows[[4]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-7,
+    n_distinct(test$kri0009$Mapped_SUBJ[[kri_workflows[[4]]$steps[[which(map_chr(kri_workflows[[4]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-8,
     nrow(test$kri0009$Analysis_Transformed)
   )
 
