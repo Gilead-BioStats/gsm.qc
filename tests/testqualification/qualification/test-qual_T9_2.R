@@ -6,7 +6,7 @@ kri_custom <- MakeWorkflowList(c("kri0005_custom", "cou0005_custom"), yaml_path_
 testthat::test_that("Labs Assessments can be done correctly using a grouping variable, such as Site or Country for KRIs, and Study for QTLs, when applicable.", {
   ## regular -----------------------------------------
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6))
-  a <- capture_warnings(robust_runworkflow(kri_workflows, mapped_data_missing_values))
+  a <- capture_warnings(robust_runworkflow(kri_workflows, mapped_data, steps = 1:6))
   removed <- gsub("\033\\[38;5;253m", "",a[2]) %>%
     strsplit(., " ") %>%
     unlist() %>%
