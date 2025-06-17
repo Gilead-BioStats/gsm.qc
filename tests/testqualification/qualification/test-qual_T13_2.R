@@ -5,7 +5,7 @@ kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 8:9), sprintf("cou%04
 ## Test Code
 testthat::test_that("Query Rate Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {
   ## regular -----------------------------------------
-  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% suppressWarnings()
+  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% expect_warning(., "value of 0 removed."))
   a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% capture_warnings()
   removed <- gsub("\033\\[38;5;253m", "",a[1]) %>%
     strsplit(., " ") %>%
