@@ -8,7 +8,7 @@ outputs <- map(kri_workflows, ~ map_vec(.x$steps, ~ .x$output))
 testthat::test_that("Given appropriate raw participant-level data, a Data Change Rate Assessment can be done using the Normal Approximation method.", {
   # default ---------------------------------
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data) %>% suppressWarnings())
-
+  a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data)) %>% expect_warning(., "value of 0 removed.")
   # verify outputs names exported
   iwalk(test, ~ expect_true(all(outputs[[.y]] %in% names(.x))))
 
