@@ -39,7 +39,7 @@ steps:
     name: RunQuery
     params:
       df: Mapped_SDRGCOMP
-      strQuery:  "SELECT DISTINCT subjid FROM df WHERE sdrgyn = 'N'"
+      strQuery: "SELECT DISTINCT subjid FROM df WHERE sdrgyn = 'N'"
   - output: Analysis_Input
     name: Input_Rate
     params:
