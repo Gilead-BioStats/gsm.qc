@@ -7,39 +7,43 @@ Authors@R: c(
     person("Laura", "Maxwell", , "lkmaxwell23@gmail.com", role = "aut"),
     person("Gilead Sciences", role = "cph")
   )
-Description: The Good Statistical Monitoring or 'gsm' R packages provides a
-    framework for statistical data monitoring. This package provides a testing
-    suite for all the packages involved and is the source of the qualification testing report.
+Description: The Good Statistical Monitoring or 'gsm' R packages provides
+    a framework for statistical data monitoring. This package provides a
+    testing suite for all the packages involved and is the source of the
+    qualification testing report.
 License: Apache License (>= 2)
-URL: https://github.com/Gilead-BioStats/gsm.qc, https://gilead-biostats.github.io/gsm.qc
+URL: https://github.com/Gilead-BioStats/gsm.qc,
+    https://gilead-biostats.github.io/gsm.qc
 BugReports: https://github.com/Gilead-BioStats/gsm.qc/issues
 Depends: 
     R (>= 4.0)
-Suggests:
-    cli,
-    dplyr,
-    gh,
+Imports: 
     glue,
     gsm.core,
     gsm.kri,
     gsm.mapping,
-    gsm.reporting,
+    gsm.reporting
+Suggests:
+    cli,
+    dplyr,
+    gh,
     gt,
     here,
     knitr,
+    log4r,
     pander,
     purrr,
     riskmetric,
     stringr,
-    testthat, 
+    testthat,
     yaml
-Remotes:
-    gsm.core=Gilead-BioStats/gsm.core@main,
-    gsm.mapping=Gilead-BioStats/gsm.mapping@main,
-    gsm.kri=Gilead-BioStats/gsm.kri@main,
-    gsm.reporting=Gilead-BioStats/gsm.reporting@main
 VignetteBuilder: 
     knitr
+Remotes:
+    gsm.core=Gilead-BioStats/gsm.core@main,
+    gsm.kri=Gilead-BioStats/gsm.kri@main,
+    gsm.mapping=Gilead-BioStats/gsm.mapping@main,
+    gsm.reporting=Gilead-BioStats/gsm.reporting@main
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
