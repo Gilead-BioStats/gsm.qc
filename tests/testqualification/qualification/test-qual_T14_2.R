@@ -21,7 +21,7 @@ testthat::test_that("PK Compliance Assessments can be done correctly using a gro
   ))
 
   ## custom -------------------------------------------
-  test_custom <- map(kri_custom, ~ robust_runworkflow(.x, mapped_data, steps = 1:5) %>% suppressWarnings())
+  test_custom <- map(kri_custom, ~ robust_runworkflow(.x, mapped_data, steps = 1:5) %>% expect_warning(., "value of 0 removed."))
 
   # grouping col in custom yaml file is interpreted correctly in dfInput GroupID
   iwalk(test_custom, ~ expect_identical(
