@@ -8,12 +8,12 @@ testthat::test_that("Data Entry Lag Assessments can be done correctly using a gr
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:5)) %>% suppressWarnings()
   a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% capture_warnings()
   removed <- ifelse(length(a) == 0, 0,
-                    a[1] %>%
-                      strsplit(., " ") %>%
-                      unlist() %>%
-                      dplyr::first() %>%
-                      str_extract(., "\\d+$") %>%
-                      as.numeric()
+    a[1] %>%
+      strsplit(., " ") %>%
+      unlist() %>%
+      dplyr::first() %>%
+      str_extract(., "\\d+$") %>%
+      as.numeric()
   )
 
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
@@ -28,7 +28,7 @@ testthat::test_that("Data Entry Lag Assessments can be done correctly using a gr
     nrow(test$cou0010$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0010$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-removed,
+    n_distinct(test$kri0010$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]) - removed,
     nrow(test$kri0010$Analysis_Transformed)
   )
 

@@ -40,9 +40,11 @@ testthat::test_that("Given appropriate raw participant-level data, flag values a
   })
 
   function_test <- map(test_nMinDenominator, function(test) {
-    map(partial_mapped_workflows, ~ Flag(.x$Analysis_Analyzed, strAccrualMetric = "Denominator", nAccrualThreshold = test,
-                                         vThreshold = .x$vThreshold,
-                                         vFlag = c(-2,-1,0,1,2)))
+    map(partial_mapped_workflows, ~ Flag(.x$Analysis_Analyzed,
+      strAccrualMetric = "Denominator", nAccrualThreshold = test,
+      vThreshold = .x$vThreshold,
+      vFlag = c(-2, -1, 0, 1, 2)
+    ))
   })
 
   expect_identical(yaml_test, function_test)

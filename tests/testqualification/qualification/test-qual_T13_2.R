@@ -8,12 +8,12 @@ testthat::test_that("Query Rate Assessments can be done correctly using a groupi
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% suppressWarnings()
   a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% capture_warnings()
   removed <- ifelse(length(a) == 0, 0,
-                    a[1] %>%
-                      strsplit(., " ") %>%
-                      unlist() %>%
-                      dplyr::first() %>%
-                      str_extract(., "\\d+$") %>%
-                      as.numeric()
+    a[1] %>%
+      strsplit(., " ") %>%
+      unlist() %>%
+      dplyr::first() %>%
+      str_extract(., "\\d+$") %>%
+      as.numeric()
   )
 
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
@@ -34,11 +34,11 @@ testthat::test_that("Query Rate Assessments can be done correctly using a groupi
     nrow(test$cou0009$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0008$Mapped_SUBJ[[kri_workflows[[3]]$steps[[which(map_chr(kri_workflows[[3]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-removed,
+    n_distinct(test$kri0008$Mapped_SUBJ[[kri_workflows[[3]]$steps[[which(map_chr(kri_workflows[[3]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]) - removed,
     nrow(test$kri0008$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0009$Mapped_SUBJ[[kri_workflows[[4]]$steps[[which(map_chr(kri_workflows[[4]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-removed,
+    n_distinct(test$kri0009$Mapped_SUBJ[[kri_workflows[[4]]$steps[[which(map_chr(kri_workflows[[4]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]) - removed,
     nrow(test$kri0009$Analysis_Transformed)
   )
 

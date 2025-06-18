@@ -8,12 +8,12 @@ testthat::test_that("Labs Assessments can be done correctly using a grouping var
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% suppressWarnings()
   a <- capture_warnings(map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)))
   removed <- ifelse(length(a) == 0, 0,
-                    a[1] %>%
-                      strsplit(., " ") %>%
-                      unlist() %>%
-                      dplyr::first() %>%
-                      str_extract(., "\\d+$") %>%
-                      as.numeric()
+    a[1] %>%
+      strsplit(., " ") %>%
+      unlist() %>%
+      dplyr::first() %>%
+      str_extract(., "\\d+$") %>%
+      as.numeric()
   )
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
   iwalk(test, ~ expect_identical(
@@ -27,7 +27,7 @@ testthat::test_that("Labs Assessments can be done correctly using a grouping var
     nrow(test$cou0005$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0005$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-removed,
+    n_distinct(test$kri0005$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]) - removed,
     nrow(test$kri0005$Analysis_Transformed)
   )
 

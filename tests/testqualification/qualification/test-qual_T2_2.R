@@ -12,12 +12,12 @@ testthat::test_that("Given raw participant-level data with missingness,
     suppressWarnings()
   a <- capture_warnings(robust_runworkflow(kri_workflows, mapped_data_missing_values))
   removed <- ifelse(length(a) == 0, 0,
-                    a[2] %>%
-                      strsplit(., " ") %>%
-                      unlist() %>%
-                      dplyr::first() %>%
-                      str_extract(., "\\d+$") %>%
-                      as.numeric()
+    a[2] %>%
+      strsplit(., " ") %>%
+      unlist() %>%
+      dplyr::first() %>%
+      str_extract(., "\\d+$") %>%
+      as.numeric()
   )
 
   expected_rows <- length(na.omit(unique(test$Mapped_SUBJ[[kri_workflows$steps[[2]]$params$strGroupCol]]))) - removed

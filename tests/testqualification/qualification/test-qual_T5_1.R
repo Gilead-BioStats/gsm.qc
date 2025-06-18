@@ -13,7 +13,6 @@ hardcode_flag_custom <- test_custom$Analysis_Flagged %>%
       Score >= test_custom$vThreshold[4] ~ 2,
     Score > test_custom$vThreshold[1] & Score <= test_custom$vThreshold[2] |
       Score < test_custom$vThreshold[4] & Score >= test_custom$vThreshold[3] ~ 1,
-
     TRUE ~ 0
   ))
 

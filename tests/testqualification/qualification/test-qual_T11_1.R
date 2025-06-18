@@ -49,7 +49,7 @@ testthat::test_that("Given appropriate raw participant-level data, a Data Entry 
       map_lgl(test_custom, function(kri) {
         output <- kri$Analysis_Flagged %>%
           mutate(hardcode_flag = case_when(
-              Score >= kri$vThreshold[2] ~ 2,
+            Score >= kri$vThreshold[2] ~ 2,
             (Score > kri$vThreshold[1] & Score <= kri$vThreshold[2]) ~ 1,
             TRUE ~ 0
           )) %>%
