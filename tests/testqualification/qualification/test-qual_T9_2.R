@@ -5,13 +5,14 @@ kri_custom <- MakeWorkflowList(c("kri0005_custom", "cou0005_custom"), yaml_path_
 ## Test Code
 testthat::test_that("Labs Assessments can be done correctly using a grouping variable, such as Site or Country for KRIs, and Study for QTLs, when applicable.", {
   ## regular -----------------------------------------
-  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6))
+  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% suppressWarnings()
   a <- capture_warnings(map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)))
   removed <- ifelse(length(a) == 0, 0,
-                    gsub("\033\\[38;5;253m", "", a[1]) %>%
+                    a[1] %>%
                       strsplit(., " ") %>%
                       unlist() %>%
                       dplyr::first() %>%
+                      str_extract(., "\\d+$") %>%
                       as.numeric()
   )
   # grouping col in yaml file is interpreted correctly in dfInput GroupID

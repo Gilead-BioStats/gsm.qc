@@ -12,10 +12,11 @@ testthat::test_that("Given raw participant-level data with missingness,
     suppressWarnings()
   a <- capture_warnings(robust_runworkflow(kri_workflows, mapped_data_missing_values))
   removed <- ifelse(length(a) == 0, 0,
-                    gsub("\033\\[38;5;253m", "", a[2]) %>%
+                    a[2] %>%
                       strsplit(., " ") %>%
                       unlist() %>%
                       dplyr::first() %>%
+                      str_extract(., "\\d+$") %>%
                       as.numeric()
   )
 

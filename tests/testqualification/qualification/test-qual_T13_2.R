@@ -8,10 +8,11 @@ testthat::test_that("Query Rate Assessments can be done correctly using a groupi
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% suppressWarnings()
   a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% capture_warnings()
   removed <- ifelse(length(a) == 0, 0,
-                    gsub("\033\\[38;5;253m", "", a[1]) %>%
+                    a[1] %>%
                       strsplit(., " ") %>%
                       unlist() %>%
                       dplyr::first() %>%
+                      str_extract(., "\\d+$") %>%
                       as.numeric()
   )
 
