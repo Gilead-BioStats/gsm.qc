@@ -7,11 +7,13 @@ testthat::test_that("Query Rate Assessments can be done correctly using a groupi
   ## regular -----------------------------------------
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% suppressWarnings()
   a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% capture_warnings()
-  removed <- gsub("\033\\[38;5;253m", "",a[1]) %>%
-    strsplit(., " ") %>%
-    unlist() %>%
-    first() %>%
-    as.numeric()
+  removed <- ifelse(length(a) == 0, 0,
+                    gsub("\033\\[38;5;253m", "", a[1]) %>%
+                      strsplit(., " ") %>%
+                      unlist() %>%
+                      dplyr::first() %>%
+                      as.numeric()
+  )
 
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
   iwalk(test, ~ expect_identical(
