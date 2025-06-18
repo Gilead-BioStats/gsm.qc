@@ -1,3 +1,11 @@
+# gsm.qc v1.1.0
+
+This minor release of `gsm.qc` version 1.1.0 includes several enhancements:
+
+- Two new qualification tests were added to the suite, testing the reporting data model, including the new `gsm.reporting::CalculateChanges()` function.
+- Generalizes the modifications needed to test the analytics pipeline when NAs are removed
+  from the data, ensuring that the tests are robust against changes to the sample data.
+
 # gsm.qc v1.0.0
 
 We are excited to announce the first major release of the `gsm.qc` package, which contains the testing suite 
