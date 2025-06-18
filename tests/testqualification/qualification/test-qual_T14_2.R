@@ -5,8 +5,7 @@ kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 13), sprintf("cou%04d
 ## Test Code
 testthat::test_that("PK Compliance Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {
   ## regular -----------------------------------------
-  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:5) %>% suppressWarnings())
-  a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data)) %>% expect_warning(., "value of 0 removed.")
+  expect_warning(test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:5)), "value of 0 removed.")
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
   iwalk(test, ~ expect_identical(
     sort(unique(.x$Analysis_Input$GroupID)),
