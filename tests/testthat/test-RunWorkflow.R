@@ -1,11 +1,9 @@
-library(gsm.core)
-library(gsm.mapping)
-library(gsm.kri)
-library(gsm.reporting)
-library(dplyr)
-library(purrr)
-library(cli)
-library(glue)
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(purrr)
+  library(cli)
+  library(glue)
+})
 set.seed(123)
 core_mappings <- c(
   "AE", "COUNTRY", "DATACHG", "DATAENT", "ENROLL", "LB",
@@ -52,6 +50,7 @@ lRaw <- list(
 )
 
 # Create Mapped Data
+gsm.core::SetLogger(log4r::logger(threshold = "FATAL"))
 lMapped <- quiet_RunWorkflows(lWorkflows = wf_mapping, lData = lRaw)
 
 # Run Metrics
@@ -64,6 +63,7 @@ yaml_outputs <- map(
   map(workflows, ~ map_vec(.x$steps, ~ .x$output)),
   ~ .x[!grepl("lCharts", .x)]
 )
+gsm.core::SetLogger(log4r::logger(threshold = "WARN"))
 
 test_that("RunWorkflow preserves all steps when bReturnResult = FALSE", {
   expect_no_error({
@@ -173,6 +173,20 @@ test_that("RunWorkflow passes existing lData objects through with configuration 
 
   expect_true(!is.null(output$lData$lWorkflows))
 })
+
+# Trick gsm.core into throwing errors as errors, not as logs. I think this
+# happens "naturally" on GHA but tests failed for me locally without this.
+gsm.core::SetLogger(log4r::logger(
+  "WARN",
+  function(level, ...) {
+    msg <- log4r::bare_log_layout()(level, ...)
+    if (toupper(level) == "WARN") {
+      warning(msg)
+    } else {
+      stop(msg)
+    }
+  }
+))
 
 test_that("RunWorkflow errors out if [ lConfig ] does not have a method to load data.", {
   lBadConfig <- lConfig
