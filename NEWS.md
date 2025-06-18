@@ -6,6 +6,11 @@ This minor release of `gsm.qc` version 1.1.0 includes several enhancements:
 - Generalizes the modifications needed to test the analytics pipeline when NAs are removed
   from the data, ensuring that the tests are robust against changes to the sample data.
 
+# gsm.qc v1.0.1
+
+This patch release updates the qualification tests to include PK Compliance KRIs 
+and to use the new gsm.core package data from gsm.core v1.1.0
+
 # gsm.qc v1.0.0
 
 We are excited to announce the first major release of the `gsm.qc` package, which contains the testing suite 
