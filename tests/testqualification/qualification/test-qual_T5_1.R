@@ -35,7 +35,7 @@ testthat::test_that("Given appropriate raw participant-level data, flag values c
   # Custom vThreshold
   expect_true(all(outputs %in% names(test_custom)))
   expect_true(is.vector(test_custom[["vThreshold"]]))
-  expect_true(all(map_lgl(test_custom[outputs[!(outputs %in% c("vThreshold", "lAnalysis"))]], is.data.frame)))
+  expect_true(all(map_lgl(test_custom[outputs[!(outputs %in% c("vThreshold", "vFlag", "lAnalysis"))]], is.data.frame)))
   expect_equal(nrow(test_custom$Analysis_Flagged), nrow(test_custom$Analysis_Summary))
   expect_identical(sort(test_custom$Analysis_Flagged$GroupID), sort(test_custom$Analysis_Summary$GroupID))
   # expect_identical(test_custom$Analysis_Flagged$Flag, test_custom$Analysis_Summary$Flag)
@@ -44,7 +44,7 @@ testthat::test_that("Given appropriate raw participant-level data, flag values c
   # default vThreshold
   expect_true(all(outputs %in% names(test_default)))
   expect_true(is.vector(test_default[["vThreshold"]]))
-  expect_true(all(map_lgl(test_default[outputs[!(outputs %in% c("vThreshold", "lAnalysis"))]], is.data.frame)))
+  expect_true(all(map_lgl(test_default[outputs[!(outputs %in% c("vThreshold", "vFlag", "lAnalysis"))]], is.data.frame)))
   expect_equal(nrow(test_default$Analysis_Flagged), nrow(test_default$Analysis_Summary))
   expect_identical(sort(test_default$Analysis_Flagged$GroupID), sort(test_default$Analysis_Summary$GroupID))
   expect_identical(test_default$Analysis_Flagged$Flag, test_default$Analysis_Summary$Flag)

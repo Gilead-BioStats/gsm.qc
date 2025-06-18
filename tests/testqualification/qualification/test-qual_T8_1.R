@@ -16,32 +16,32 @@ testthat::test_that("Given appropriate raw participant-level data, a Dispositon 
   expect_true(
     all(
       imap_lgl(test, function(kri, kri_name) {
-        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "lAnalysis"))]], is.data.frame))
+        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "vFlag", "lAnalysis"))]], is.data.frame))
       })
     )
   )
 
   # verify vThreshold was converted to threshold vector of length 4
-  walk(test, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 4))
+  walk(test, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 2))
 
 
   # custom ----------------------------------
   test_custom <- map(kri_custom, ~ robust_runworkflow(.x, mapped_data))
 
   # verify outputs names exported
-  iwalk(test, ~ expect_true(all(outputs[[.y]] %in% names(.x))))
+  iwalk(test_custom, ~ expect_true(all(outputs[[.y]] %in% names(.x))))
 
   # verify output data expected as data.frames are in fact data.frames
   expect_true(
     all(
-      imap_lgl(test, function(kri, kri_name) {
+      imap_lgl(test_custom, function(kri, kri_name) {
         all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "lAnalysis"))]], is.data.frame))
       })
     )
   )
 
   # verify vThreshold was converted to threshold vector of length 4
-  walk(test, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 4))
+  walk(test_custom, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 4))
 
   # verify vThreshold was properly applied to data to assign flags
   expect_true(
