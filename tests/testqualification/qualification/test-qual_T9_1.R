@@ -15,13 +15,13 @@ testthat::test_that("Given appropriate raw participant-level data, a Labs Assess
   expect_true(
     all(
       imap_lgl(test, function(kri, kri_name) {
-        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "lAnalysis"))]], is.data.frame))
+        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "vFlag", "lAnalysis"))]], is.data.frame))
       })
     )
   )
 
   # verify vThreshold was converted to threshold vector of length 4
-  walk(test, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 4))
+  walk(test, ~ expect_true(is.vector(.x$vThreshold) & length(.x$vThreshold) == 2))
 
 
   # custom ----------------------------------

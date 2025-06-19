@@ -1,4 +1,3 @@
-^gsm\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
 ^codecov\.yml$
@@ -15,3 +14,5 @@
 ^inst/snapshots$
 ^inst/demo$
 ^inst/README\.md$
+^Qualification\.pdf$
+^gsm\.qc\.Rproj$
