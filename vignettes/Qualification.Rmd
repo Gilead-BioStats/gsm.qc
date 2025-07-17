@@ -213,6 +213,8 @@ pander::pandoc.p('\\pagebreak')
 
 # Pull Request History
 
+Add paragraph about PR process and explain that only the most recent 10 re displayed. include a link to the PRs so they can see all of them
+
 ```{r prs}
 release <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/releases"), .token = remotes:::github_pat())[[1]]
 release_date <- ifelse(is.null(release$published_at), release$created_at, release$published_at)
@@ -259,7 +261,7 @@ getRepoDetails <- function(x) {
   if (length(tempReviews) > 0) {
   ReviewStatus <- tempReviews[[1]][["state"]]
   ReviewComments <- tempReviews[[1]][["body"]]
-  Reviewers <- lapply(tempReviews, function(x) x[["user"]][["login"]]) %>% unlist()
+  Reviewers <- lapply(tempReviews, function(x) x[["user"]][["login"]]) %>% unlist() %>% unique() %>% paste(., collapse = "\n ")
   } else {
     ReviewStatus <- ""
     ReviewComments <- "None"
