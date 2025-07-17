@@ -213,7 +213,7 @@ pander::pandoc.p('\\pagebreak')
 
 # Pull Request History
 
-```{r prs, eval = FALSE}
+```{r prs}
 release <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/releases"), .token = remotes:::github_pat())[[1]]
 release_date <- ifelse(is.null(release$published_at), release$created_at, release$published_at)
 
@@ -222,7 +222,7 @@ page_num <- 1
 prs <- list()
 while(pr_at_date != TRUE){
   resp <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/pulls"), per_page = 100, .token = remotes:::github_pat(),
-             .params = list(page = page_num, state = "all"))
+             .params = list(page = page_num, state = "closed"))
 
   map(resp, function(x){
     if (!is.null(x$closed_at) &
@@ -233,8 +233,8 @@ while(pr_at_date != TRUE){
 
   if (pr_at_date == TRUE){
     resp_sub <- resp %>%
-      keep(~ !is.null(.$closed_at) &
-             min(as.character(.$closed_at), as.POSIXct(Sys.time())) < as.character(release_date))
+      keep(~ !is.null(.$merged_at) &
+             min(as.character(.$merged_at), as.POSIXct(Sys.time())) < as.character(release_date))
     prs <<- append(prs, resp_sub)
 
   }else{
