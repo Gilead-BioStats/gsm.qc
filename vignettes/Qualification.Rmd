@@ -253,20 +253,17 @@ getRepoDetails <- function(x) {
   Title <- x[["title"]]
   Link <- x[["html_url"]]
 
-  if (length(x[["requested_reviewers"]]) > 0) {
-    Reviewers <- paste(map(x[["requested_reviewers"]], ~ .x[["login"]]), collapse = "\n\n")
-  } else {
-    Reviewers = ""
-  }
 
   tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/", params$repo, "/pulls/", PullRequest, "/reviews"))
 
   if (length(tempReviews) > 0) {
   ReviewStatus <- tempReviews[[1]][["state"]]
   ReviewComments <- tempReviews[[1]][["body"]]
+  Reviewers <- lapply(tempReviews, function(x) x[["user"]][["login"]]) %>% unlist()
   } else {
     ReviewStatus <- ""
     ReviewComments <- "None"
+    Reviewers = ""
   }
 
   pr <- tibble(
@@ -291,7 +288,8 @@ getRepoDetails <- function(x) {
 
 tbl <- map_df(prs, ~getRepoDetails(.))
 
-for (i in 1:nrow(tbl)){
+#display most recent 10 PRs
+for (i in 1:10){
   pander::pandoc.p(
     c(
       pander::pandoc.header(paste0("Pull Request ", tbl[i, "Pull Request"], ": ", tbl[i, "Title"]), level = 3),
