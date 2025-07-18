@@ -213,7 +213,12 @@ pander::pandoc.p('\\pagebreak')
 
 # Pull Request History
 
-```{r prs, eval = FALSE}
+The GitHub Pull Request (PR) process begins with the creation of one or more issues that clearly define the proposed additions or revisions to the package. Each issue should be assigned to a product developer (PD) who then creates a `fix` branch named according to the related issue(s), and implements the necessary code updates. Once the work is complete, the PD opens a Pull Request to merge the `fix` branch into the target branch (typically the `dev` branch). They must assign the PR to themselves, request one or more reviewers, and link the PR to the associated issue(s). Before the fix branch can be merged, the PR must be approved by the designated reviewers and pass all required GitHub qualification checks. Once these conditions are met, the `fix` branch is merged into the target branch. This process is fully documented in the [Contributor Guidelines](https://gilead-biostats.github.io/gsm.core/articles/ContributorGuidelines.html#development-process)
+
+
+Below, the most recent 10 PRs into `r params$repo` are displayed. [See all Pull Requests here.](`r paste0("https://github.com/gilead-biostats/",params$repo,"/pulls")`)
+
+```{r prs}
 release <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/releases"), .token = remotes:::github_pat())[[1]]
 release_date <- ifelse(is.null(release$published_at), release$created_at, release$published_at)
 
@@ -222,7 +227,7 @@ page_num <- 1
 prs <- list()
 while(pr_at_date != TRUE){
   resp <- gh(paste0("/repos/Gilead-BioStats/",params$repo,"/pulls"), per_page = 100, .token = remotes:::github_pat(),
-             .params = list(page = page_num, state = "all"))
+             .params = list(page = page_num, state = "closed"))
 
   map(resp, function(x){
     if (!is.null(x$closed_at) &
@@ -233,8 +238,8 @@ while(pr_at_date != TRUE){
 
   if (pr_at_date == TRUE){
     resp_sub <- resp %>%
-      keep(~ !is.null(.$closed_at) &
-             min(as.character(.$closed_at), as.POSIXct(Sys.time())) < as.character(release_date))
+      keep(~ !is.null(.$merged_at) &
+             min(as.character(.$merged_at), as.POSIXct(Sys.time())) < as.character(release_date))
     prs <<- append(prs, resp_sub)
 
   }else{
@@ -253,20 +258,17 @@ getRepoDetails <- function(x) {
   Title <- x[["title"]]
   Link <- x[["html_url"]]
 
-  if (length(x[["requested_reviewers"]]) > 0) {
-    Reviewers <- paste(map(x[["requested_reviewers"]], ~ .x[["login"]]), collapse = "\n\n")
-  } else {
-    Reviewers = ""
-  }
 
   tempReviews <- gh(paste0("GET /repos/Gilead-BioStats/", params$repo, "/pulls/", PullRequest, "/reviews"))
 
   if (length(tempReviews) > 0) {
   ReviewStatus <- tempReviews[[1]][["state"]]
   ReviewComments <- tempReviews[[1]][["body"]]
+  Reviewers <- lapply(tempReviews, function(x) x[["user"]][["login"]]) %>% unlist() %>% unique() %>% paste(., collapse = "\n ")
   } else {
     ReviewStatus <- ""
     ReviewComments <- "None"
+    Reviewers = ""
   }
 
   pr <- tibble(
@@ -291,7 +293,8 @@ getRepoDetails <- function(x) {
 
 tbl <- map_df(prs, ~getRepoDetails(.))
 
-for (i in 1:nrow(tbl)){
+#display most recent 10 PRs
+for (i in 1:10){
   pander::pandoc.p(
     c(
       pander::pandoc.header(paste0("Pull Request ", tbl[i, "Pull Request"], ": ", tbl[i, "Title"]), level = 3),
