@@ -1,38 +1,20 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(strPath = "workflow/2_metrics", strPackage = "gsm.kri")
+kri_workflows <- MakeWorkflowList(strNames = "kri", strPath = "workflow/2_metrics", strPackage = "gsm.kri")
+analyzed <- RunWorkflows(kri_workflows[-13], mapped_data) # Exclude pk/pd since thats not counting to SRS
+
 reporting_workflows <- MakeWorkflowList(strPackage = "gsm.reporting")
-analyzed <- RunWorkflows(kri_workflows, mapped_data)
 outputs <- map(reporting_workflows, \(x) x$steps[[length(x$steps)]]$output)
 
 ## Test Code
-testthat::test_that("Given summarized analytics data, a properly specified reporting workflow creates cross-sectional results data set with one record per metric per group.", {
-  test <- RunWorkflows(reporting_workflows, lData = c(mapped_data, list(
-    lAnalyzed = analyzed,
-    lWorkflows = kri_workflows
-  )))
+testthat::test_that("Given summarized analytics data, all appropriate aspects of site risk score are available to calculate it correctly", {
+  # Check all kri workflows have 1:1 mapped flags and respective weights
+  expect_equal(
+    map(kri_workflows[-13], function(x) length(strsplit(x$meta$Flag, ",")[[1]])) ,
+    map(kri_workflows[-13], function(x) length(strsplit(x$meta$RiskScoreWeight, ",")[[1]]))
+  )
 
-  # test output stucture
-  expect_true(all(map_lgl(test, \(x) is.data.frame(x))))
-  expect_equal(nrow(test$Reporting_Metrics), length(analyzed))
-  expect_equal(nrow(test$Reporting_Results), analyzed %>% map(\(x) {
-    nrow(x$Analysis_Summary)
-  }) %>% do.call(sum, .))
+  # Check that all Analysis_Flagged data frames contain columns for Weight and WeightMax
+  expect_true(all(unlist(map(analyzed, function(x) all(c("Weight", "WeightMax") %in% names(x$Analysis_Flagged))))))
 
-  # test output content
-  expect_true(all(outputs %in% names(test)))
-  expect_equal(unique(test$Reporting_Results$GroupID), analyzed %>% map(\(x) {
-    x$Analysis_Summary$GroupID
-  }) %>% do.call(c, .) %>% unique())
-  ## construct metrics df with kri_workflows meta and compare to output
-  metrics_df <- kri_workflows %>%
-    purrr::map(function(wf) {
-      return(tibble::as_tibble(wf$meta))
-    }) %>%
-    purrr::list_rbind() %>%
-    mutate(MetricID = paste0(
-      .data$Type,
-      "_", .data$ID
-    ))
-  expect_equal(test$Reporting_Metrics, metrics_df)
-  expect_equal(test$Reporting_Groups, bind_rows(mapped_data$Mapped_STUDY, mapped_data$Mapped_SITE, mapped_data$Mapped_COUNTRY))
+
 })
