@@ -20,18 +20,18 @@ testthat::test_that("Given raw participant-level data with missingness,
                       as.numeric()
   )
 
-  expected_rows <- length(na.omit(unique(test$Mapped_SUBJ[[kri_workflows$steps[[2]]$params$strGroupCol]]))) - removed
+  expected_rows <- length(na.omit(unique(test$Mapped_SUBJ[[kri_workflows$steps[[4]]$params$strGroupCol]]))) - removed
 
   # test output stucture
   expect_true(is.vector(test$vThreshold))
-  expect_true(all(map_lgl(test[outputs[!(outputs %in% c("vThreshold", "lAnalysis"))]], is.data.frame)))
+  expect_true(all(map_lgl(test[outputs[str_detect(outputs, pattern = "Analysis_")]], is.data.frame)))
   expect_equal(nrow(test$Analysis_Flagged), expected_rows)
   expect_equal(nrow(test$Analysis_Summary), expected_rows)
 
   ## test
   expect_true(all(outputs %in% names(test)))
   expect_true(is.vector(test$vThreshold))
-  expect_true(all(map_lgl(test[outputs[!(outputs %in% c("vThreshold", "lAnalysis"))]], is.data.frame)))
+  expect_true(all(map_lgl(test[outputs[str_detect(outputs, pattern = "Analysis_")]], is.data.frame)))
   expect_equal(nrow(test$Analysis_Flagged), nrow(test$Analysis_Summary))
   expect_identical(sort(test$Analysis_Flagged$GroupID), sort(test$Analysis_Summary$GroupID))
 })

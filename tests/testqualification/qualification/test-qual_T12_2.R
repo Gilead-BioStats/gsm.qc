@@ -5,8 +5,8 @@ kri_custom <- MakeWorkflowList(c(sprintf("kri%04d_custom", 8:9), sprintf("cou%04
 ## Test Code
 testthat::test_that("Query Age Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {
   ## regular -----------------------------------------
-  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% suppressWarnings()
-  a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:6)) %>% capture_warnings()
+  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:8)) %>% suppressWarnings()
+  a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:8)) %>% capture_warnings()
   removed <- ifelse(length(a) == 0, 0,
                     a[1] %>%
                       strsplit(., " ") %>%
