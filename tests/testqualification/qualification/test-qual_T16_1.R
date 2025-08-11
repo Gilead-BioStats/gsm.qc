@@ -20,8 +20,8 @@ testthat::test_that("Given summarized analytics data, all appropriate aspects of
   # Check that all Analysis_Flagged data frames contain columns for Weight and WeightMax
   expect_true(all(unlist(map(analyzed, function(x) all(c("Weight", "WeightMax") %in% names(x$Analysis_Flagged))))))
 
-  # Check Risk Score matches by hand vs using gsm.kri functions
-  by_hand <- map2(
+  # Check Site Risk Score matches by hand vs using gsm.kri functions
+  SRS_by_hand <- map2(
     analyzed,
     names(analyzed),
     function(x, y) {
@@ -34,10 +34,27 @@ testthat::test_that("Given summarized analytics data, all appropriate aspects of
     group_by(GroupID) %>%
     summarize(RiskScore = sum(Weight, na.rm = TRUE),
               RiskScore_Max = sum(WeightMax, na.rm = TRUE),
-              RiskScore_Percent = RiskScore/RiskScore_Max * 100,
-              .groups = 'drop')
+              RiskScore_Percent = RiskScore/RiskScore_Max * 100)
 
-  auto <- reporting$Reporting_Results %>% RiskScore() %>% GroupRiskScore(strGroupLevel = "Site") %>% select(GroupID, contains("Risk"))
+  SRS_auto <- reporting$Reporting_Results %>% RiskScore() %>% GroupRiskScore(strGroupLevel = "Site") %>% select(GroupID, contains("Risk"))
 
   expect_equal(by_hand, auto)
+
+  # Flagging and appropriate transposed dataframe is used for visualizations matches
+  # transposed_by_hand <- map2(
+  #   analyzed,
+  #   names(analyzed),
+  #   function(x, y) {
+  #     x$Analysis_Summary %>%
+  #       mutate(MetricID = y) %>%
+  #       inner_join(., gsm.kri::metricWeights, by = c("MetricID", "Flag"))
+  #   }
+  # ) %>%
+  #   bind_rows() %>%
+  #   left_join(., select(reporting$Reporting_Metrics, MetricID, Abbreviation) , by = "MetricID") %>%
+  #   mutate(FlagIcon = Report_FormatFlag(Flag),
+  #          Label = paste0(FlagIcon, ' <sup>', Weight, '</sup>')) %>%
+  #   tidyr::pivot_wider(., names_from = Abbreviation, values_from = Label )
+  #
+  # Transpose_auto <- reporting$Reporting_Results %>% RiskScore() %>% TransposeRiskScore(., dfMetrics = reporting$Reporting_Metrics)
 })
