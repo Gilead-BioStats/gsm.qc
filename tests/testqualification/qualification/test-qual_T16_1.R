@@ -39,22 +39,4 @@ testthat::test_that("Given summarized analytics data, all appropriate aspects of
   SRS_auto <- reporting$Reporting_Results %>% RiskScore() %>% GroupRiskScore(strGroupLevel = "Site") %>% select(GroupID, contains("Risk"))
 
   expect_equal(by_hand, auto)
-
-  # Flagging and appropriate transposed dataframe is used for visualizations matches
-  # transposed_by_hand <- map2(
-  #   analyzed,
-  #   names(analyzed),
-  #   function(x, y) {
-  #     x$Analysis_Summary %>%
-  #       mutate(MetricID = y) %>%
-  #       inner_join(., gsm.kri::metricWeights, by = c("MetricID", "Flag"))
-  #   }
-  # ) %>%
-  #   bind_rows() %>%
-  #   left_join(., select(reporting$Reporting_Metrics, MetricID, Abbreviation) , by = "MetricID") %>%
-  #   mutate(FlagIcon = Report_FormatFlag(Flag),
-  #          Label = paste0(FlagIcon, ' <sup>', Weight, '</sup>')) %>%
-  #   tidyr::pivot_wider(., names_from = Abbreviation, values_from = Label )
-  #
-  # Transpose_auto <- reporting$Reporting_Results %>% RiskScore() %>% TransposeRiskScore(., dfMetrics = reporting$Reporting_Metrics)
 })
