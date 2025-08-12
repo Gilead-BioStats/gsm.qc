@@ -7,8 +7,6 @@ historical_reporting_results <- gsm.core::reportingResults %>% dplyr::filter(Sna
 reporting <- RunWorkflows(reporting_workflows, lData = c(mapped_data, list(lAnalyzed = analyzed,
                                                                         lWorkflows = kri_workflows[-13])))
 
-outputs <- map(reporting_workflows, \(x) x$steps[[length(x$steps)]]$output)
-
 ## Test Code
 testthat::test_that("Given summarized analytics data, all appropriate aspects of site risk score are available to calculate it correctly", {
   # Check all kri workflows have 1:1 mapped flags and respective weights
@@ -32,11 +30,12 @@ testthat::test_that("Given summarized analytics data, all appropriate aspects of
   ) %>%
     bind_rows() %>%
     group_by(GroupID) %>%
-    summarize(RiskScore = sum(Weight, na.rm = TRUE),
-              RiskScore_Max = sum(WeightMax, na.rm = TRUE),
-              RiskScore_Percent = RiskScore/RiskScore_Max * 100)
+    summarize(Numerator = sum(Weight, na.rm = TRUE),
+              Denominator = sum(WeightMax, na.rm = TRUE),
+              Metric = Numerator/Denominator * 100,
+              Score = Metric)
 
-  SRS_auto <- reporting$Reporting_Results %>% RiskScore() %>% GroupRiskScore(strGroupLevel = "Site") %>% select(GroupID, contains("Risk"))
+  SRS_auto <- analyzed %>% CalculateRiskScore()
 
-  expect_equal(by_hand, auto)
+  expect_equal(SRS_by_hand, SRS_auto)
 })
