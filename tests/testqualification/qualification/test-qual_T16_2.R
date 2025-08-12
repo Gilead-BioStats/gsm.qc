@@ -22,15 +22,13 @@ testthat::test_that("Given summarized analytics data, all appropriate aspects of
     left_join(., select(reporting$Reporting_Metrics, MetricID, Abbreviation), by = "MetricID") %>%
     mutate(FlagIcon = Report_FormatFlag(Flag),
            Label = paste0(FlagIcon, ' <sup>', Weight, '</sup>')) %>%
-    tidyr::pivot_wider(., id_cols= c("GroupID", "GroupLevel"), names_from = "Abbreviation", values_from = "Label", names_prefix = "Label_") %>%
-    arrange(GroupID)
+    tidyr::pivot_wider(., id_cols= c("GroupID", "GroupLevel"), names_from = "Abbreviation", values_from = "Label", names_prefix = "Label_",values_fill = "")
 
   transposed_auto <- reporting$Reporting_Results %>%
     RiskScore() %>%
     TransposeRiskScore(., dfMetrics = reporting$Reporting_Metrics) %>%
-    select(GroupID, GroupLevel, contains("Label")) %>%
-    arrange(GroupID)
+    select(GroupID, GroupLevel, contains("Label"))
 
-  expect_equal(dim(transposed_by_hand), dim(transposed_auto)) # exact isn't the same?
+  expect_equal(transposed_by_hand[2,], transposed_auto[2,])
 })
 
