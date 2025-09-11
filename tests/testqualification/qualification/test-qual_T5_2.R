@@ -44,7 +44,7 @@ testthat::test_that("Given appropriate raw participant-level data, flag values a
       strAccrualMetric = "Denominator", nAccrualThreshold = test,
       vThreshold = .x$vThreshold,
       vFlag = c(-2, -1, 0, 1, 2),
-      vRiskScoreWeight = c(8,4,0,0,0)
+      vRiskScoreWeight = c(32,16,0,1,2)
     ))
   })
 
