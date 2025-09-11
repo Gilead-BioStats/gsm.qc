@@ -1,14 +1,14 @@
 ## Test Setup
-kri_workflows <- MakeWorkflowList(strPath = "workflow/2_metrics", strPackage = "gsm.kri")
+kri_workflows <- MakeWorkflowList(strNames = c("kri", "srs"), strPath = "workflow/2_metrics", strPackage = "gsm.kri")
 reporting_workflows <- MakeWorkflowList(strPackage = "gsm.reporting")
-analyzed <- RunWorkflows(kri_workflows, mapped_data)
+analyzed <- RunWorkflows(kri_workflows, mapped_data) %>% suppressWarnings()
 outputs <- map(reporting_workflows, \(x) x$steps[[length(x$steps)]]$output)
 historical_reporting_results <- gsm.core::reportingResults %>% dplyr::filter(SnapshotDate < max(.data$SnapshotDate))
 ## Test Code
 testthat::test_that("Given summarized analytics data and historical reporting results data, a properly specified reporting workflow creates cross-sectional results data set including changes from previous snapshot with one record per metric per group.", {
   test <- RunWorkflows(reporting_workflows, lData = c(mapped_data, list(lAnalyzed = analyzed,
                                                                         lWorkflows = kri_workflows,
-                                                                        Reporting_Results_Longitudinal = historical_reporting_results)))
+                                                                        Reporting_Results_Longitudinal = historical_reporting_results))) %>% suppressWarnings()
 
   # test output stucture
   expect_true(all(map_lgl(test, \(x) is.data.frame(x))))

@@ -1,6 +1,6 @@
 ## Test Setup
 kri_workflows <- MakeWorkflowList(strNames = c(paste0("kri000", 1:9), paste0("kri00", 10:12), "srs"), strPath = "workflow/2_metrics", strPackage = "gsm.kri")
-analyzed <- RunWorkflows(kri_workflows, mapped_data) # Exclude pk/pd since thats not counting to SRS
+analyzed <- RunWorkflows(kri_workflows, mapped_data) %>% suppressWarnings() # Exclude pk/pd since thats not counting to SRS
 
 ## Test Code
 testthat::test_that("Given summarized analytics data, all appropriate aspects of site risk score are available to calculate it correctly", {
