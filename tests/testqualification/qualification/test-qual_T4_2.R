@@ -16,7 +16,7 @@ testthat::test_that("Given appropriate metadata (i.e. vThresholds), bounds are p
   expect_true(
     all(
       imap_lgl(test, function(kri, kri_name) {
-        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "lAnalysis"))]], is.data.frame))
+        all(map_lgl(kri[outputs[[kri_name]][str_detect(outputs[[kri_name]], pattern = "Analysis_")]], is.data.frame))
       })
     )
   )
@@ -35,7 +35,7 @@ testthat::test_that("Given appropriate metadata (i.e. vThresholds), bounds are p
   expect_true(
     all(
       imap_lgl(test_custom, function(kri, kri_name) {
-        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "lAnalysis"))]], is.data.frame))
+        all(map_lgl(kri[outputs[[kri_name]][str_detect(outputs[[kri_name]], pattern = "Analysis_")]], is.data.frame))
       })
     )
   )
