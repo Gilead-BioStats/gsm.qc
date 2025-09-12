@@ -1,3 +1,7 @@
+# gsm.mapping 1.1.1
+
+This patch release adds new contributor guidelines and standardized issue templates and a new test for site risk score.
+
 # gsm.qc v1.1.0
 
 This minor release of `gsm.qc` version 1.1.0 includes several enhancements:
