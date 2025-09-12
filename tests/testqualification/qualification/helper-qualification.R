@@ -2,6 +2,7 @@ suppressPackageStartupMessages({
   library(gsm.qc)
   library(dplyr)
   library(purrr)
+  library(tidyr)
   library(cli)
   library(glue)
   library(yaml)
