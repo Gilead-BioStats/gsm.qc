@@ -5,7 +5,7 @@ kri_custom <- MakeWorkflowList(c("kri0003_custom", "kri0004_custom", "cou0003_cu
 ## Test Code
 testthat::test_that("Protocol Deviation Assessments can be done correctly using a grouping variable, such as Site or Country for KRIs, and Study for QTLs, when applicable.", {
   ## regular -----------------------------------------
-  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:4))
+  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:7))
 
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
   iwalk(test, ~ expect_identical(

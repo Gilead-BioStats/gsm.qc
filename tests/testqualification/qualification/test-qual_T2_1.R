@@ -6,11 +6,11 @@ outputs <- map_vec(kri_workflows$steps, ~ .x$output)
 ## Test Code
 testthat::test_that("Given raw participant-level data, a properly specified Workflow for a KRI creates summarized and flagged data", {
   test <- robust_runworkflow(kri_workflows, mapped_data)
-  expected_rows <- length(na.omit(unique(test$Mapped_SUBJ[[kri_workflows$steps[[2]]$params$strGroupCol]])))
+  expected_rows <- length(na.omit(unique(test$Mapped_SUBJ[[kri_workflows$steps[[4]]$params$strGroupCol]])))
 
   # test output stucture
   expect_true(is.vector(test$vThreshold))
-  expect_true(all(map_lgl(test[outputs[!(outputs %in% c("vThreshold", "lAnalysis"))]], is.data.frame)))
+  expect_true(all(map_lgl(test[outputs[str_detect(outputs, pattern = "Analysis_")]], is.data.frame)))
   expect_equal(nrow(test$Analysis_Flagged), expected_rows)
   expect_equal(nrow(test$Analysis_Summary), expected_rows)
 
@@ -30,4 +30,6 @@ testthat::test_that("Given raw participant-level data, a properly specified Work
 
   expect_identical(flags$hardcode_flag, flags$Flag.x)
   expect_identical(flags$hardcode_flag, flags$Flag.y)
+
+  expect_true(all(c("Weight", "WeightMax") %in% names(flags)))
 })

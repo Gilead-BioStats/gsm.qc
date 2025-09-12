@@ -6,7 +6,7 @@ outputs <- map(kri_workflows, ~ map_vec(.x$steps, ~ .x$output))
 
 ## Test Code
 testthat::test_that("Given appropriate raw participant-level data, a Labs Assessment can be done using the Normal Approximation method.", {
-  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data))
+  test <- suppressWarnings(map(kri_workflows, ~ robust_runworkflow(.x, mapped_data)))
 
   # verify outputs names exported
   iwalk(test, ~ expect_true(all(outputs[[.y]] %in% names(.x))))
@@ -15,7 +15,7 @@ testthat::test_that("Given appropriate raw participant-level data, a Labs Assess
   expect_true(
     all(
       imap_lgl(test, function(kri, kri_name) {
-        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "vFlag", "lAnalysis"))]], is.data.frame))
+        all(map_lgl(kri[outputs[[kri_name]][str_detect(outputs[[kri_name]], pattern = "Analysis_")]], is.data.frame))
       })
     )
   )
@@ -34,7 +34,7 @@ testthat::test_that("Given appropriate raw participant-level data, a Labs Assess
   expect_true(
     all(
       imap_lgl(test_custom, function(kri, kri_name) {
-        all(map_lgl(kri[outputs[[kri_name]][!(outputs[[kri_name]] %in% c("vThreshold", "lAnalysis"))]], is.data.frame))
+        all(map_lgl(kri[outputs[[kri_name]][str_detect(outputs[[kri_name]], pattern = "Analysis_")]], is.data.frame))
       })
     )
   )
