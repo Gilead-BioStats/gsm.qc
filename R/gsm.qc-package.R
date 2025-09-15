@@ -30,8 +30,8 @@ quiet_Analyze_NormalApprox <- function(...) {
 }
 
 quiet_Analyze_NormalApprox_PredictBounds <- function(
-    ...,
-    msg_classes = c("default_nStep", "default_vThreshold")
+  ...,
+  msg_classes = c("default_nStep", "default_vThreshold")
 ) {
   suppressMessages(
     {

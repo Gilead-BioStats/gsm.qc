@@ -5,9 +5,9 @@ kri_custom <- MakeWorkflowList(c("kri0011_custom", "cou0011_custom"), yaml_path_
 ## Test Code
 testthat::test_that("Data Change Rate Assessments can be done correctly using a grouping variable, such as Site, Country, or Study, when applicable.", {
   ## regular -----------------------------------------
-
   test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:7)) %>% suppressWarnings()
   a <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:8)) %>% capture_warnings()
+
   removed <- ifelse(length(a) == 0, 0,
     a[1] %>%
       strsplit(., " ") %>%
@@ -29,7 +29,7 @@ testthat::test_that("Data Change Rate Assessments can be done correctly using a 
     nrow(test$cou0011$Analysis_Transformed)
   )
   expect_equal(
-    n_distinct(test$kri0011$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]])-removed,
+    n_distinct(test$kri0011$Mapped_SUBJ[[kri_workflows[[2]]$steps[[which(map_chr(kri_workflows[[2]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]) - removed,
     nrow(test$kri0011$Analysis_Transformed)
   )
 
