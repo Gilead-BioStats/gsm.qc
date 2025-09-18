@@ -11,7 +11,8 @@ lData <- list(
     rename(subjid = subjectenrollmentnumber),
   Raw_LB = lSource$Raw_LB,
   Raw_STUDCOMP = lSource$Raw_STUDCOMP,
-  Raw_SDRGCOMP = lSource$Raw_SDRGCOMP,
+  Raw_SDRGCOMP = lSource$Raw_SDRGCOMP %>%
+    mutate(phase = as.character(phase)),
   Raw_DATACHG = lSource$Raw_DATACHG %>%
     rename(subject_nsv = subjectname),
   Raw_DATAENT = lSource$Raw_DATAENT %>%

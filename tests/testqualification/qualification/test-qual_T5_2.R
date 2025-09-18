@@ -4,7 +4,7 @@ kri_workflows <- c(
   MakeWorkflowList("kri0001_custom", yaml_path_custom_metrics, strPackage = "gsm.qc")
 )
 
-partial_mapped_workflows <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:5))
+partial_mapped_workflows <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:7))
 
 ## Test Code
 testthat::test_that("Given appropriate raw participant-level data, flag values are correctly assigned as NA for sites with low enrollment.", {
@@ -36,16 +36,26 @@ testthat::test_that("Given appropriate raw participant-level data, flag values a
     for (workflow in names(kri_workflows)) {
       kri_workflows[[workflow]]$meta$AccrualThreshold <- test
     }
-    imap(partial_mapped_workflows, ~ robust_runworkflow(kri_workflows[[.y]], .x, steps = 5, bKeepInputData = F)[["Analysis_Flagged"]])
+    imap(partial_mapped_workflows, ~ robust_runworkflow(kri_workflows[[.y]], .x, steps = 1:7, bKeepInputData = F)[["Analysis_Flagged"]])
   })
 
   function_test <- map(test_nMinDenominator, function(test) {
     map(partial_mapped_workflows, ~ Flag(.x$Analysis_Analyzed,
       strAccrualMetric = "Denominator", nAccrualThreshold = test,
       vThreshold = .x$vThreshold,
-      vFlag = c(-2, -1, 0, 1, 2)
+      vFlag = c(-2, -1, 0, 1, 2),
+      vRiskScoreWeight = c(32,16,0,1,2)
     ))
   })
 
-  expect_identical(yaml_test, function_test)
+  cols_to_rm <- c("Weight","WeightMax")
+  keep_names <- c("cou0001","kri0001_custom")
+  function_test_clean <- map(function_test, ~ modify_at(
+    .x,
+    .at = intersect(names(.x), keep_names),
+    .f  = ~ select(.x, -all_of(cols_to_rm))
+  ))
+
+
+  expect_identical(yaml_test, function_test_clean)
 })

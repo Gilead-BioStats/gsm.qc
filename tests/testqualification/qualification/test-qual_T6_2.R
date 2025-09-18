@@ -7,7 +7,7 @@ outputs <- map(kri_workflows, ~ map_vec(.x$steps, ~ .x$output))
 ## Test Code
 testthat::test_that("Adverse Event Assessments can be done correctly using a grouping variable, such as Site or Country for KRIs, and Study for QTLs, when applicable.", {
   ## regular -----------------------------------------
-  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:4))
+  test <- map(kri_workflows, ~ robust_runworkflow(.x, mapped_data, steps = 1:7))
 
 
   # grouping col in yaml file is interpreted correctly in dfInput GroupID
@@ -46,7 +46,7 @@ testthat::test_that("Adverse Event Assessments can be done correctly using a gro
     return(kri)
   })
 
-  test_custom2 <- map(kri_custom2, ~ robust_runworkflow(.x, mapped_data, steps = 1:4))
+  test_custom2 <- map(kri_custom2, ~ robust_runworkflow(.x, mapped_data, steps = 1:7))
 
   # grouping col in custom2 workflow is interpreted correctly in dfInput GroupID
   iwalk(test_custom2, ~ expect_identical(
@@ -55,8 +55,8 @@ testthat::test_that("Adverse Event Assessments can be done correctly using a gro
   ))
 
   # data is properly transformed by correct group in dfTransformed
-  # iwalk(test_custom2, ~ expect_equal(
-  #   n_distinct(.x$Mapped_SUBJ[[kri_custom2[[.y]]$steps[[which(map_chr(kri_workflows[[.y]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]),
-  #   nrow(.x$Analysis_Transformed)
-  # ))
+  iwalk(test_custom2, ~ expect_equal(
+    n_distinct(.x$Mapped_SUBJ[[kri_custom2[[.y]]$steps[[which(map_chr(kri_workflows[[.y]]$steps, ~ .x$name) == "gsm.core::Input_Rate")]]$params$strGroupCol]]),
+    nrow(.x$Analysis_Transformed)
+  ))
 })
