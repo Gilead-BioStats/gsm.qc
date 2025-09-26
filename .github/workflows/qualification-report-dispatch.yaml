@@ -35,6 +35,9 @@ jobs:
           repo_slug <- Sys.getenv("repo_name")
           repo_name_short <- gsub("Gilead-BioStats/", "", repo_slug)
           repo_branch <- Sys.getenv("branch", unset = "main")
+          if (!isTRUE(grepl("[A-Za-z]", repo_branch))) {
+            repo_branch = "main"
+          }
           pak::pak(paste0(repo_slug, "@", repo_branch))
           rmarkdown::render("./vignettes/Qualification.Rmd", output_dir = getwd(), params = list(repo = repo_name_short))
         shell: Rscript {0}
