@@ -37,6 +37,7 @@ jobs:
             repo_branch = "main"
           }
           pak::pak(paste0(Sys.getenv("repo_name"), "@", repo_branch))
+        shell: Rscript {0}
 
       - name: build vignette
         env:
